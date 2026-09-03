@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berikan Rating - ENY LEATHER</title>
+    <title>Berikan Rating - TOKO RAFI</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{{ asset('js/tailwind-config.js') }}"></script>
@@ -41,11 +41,11 @@
             <div class="text-center">
                 <label class="block text-[10px] tracking-[0.2em] uppercase font-bold mb-4">Rating Anda</label>
                 <div class="flex justify-center gap-2 text-4xl text-gray-300 dark:text-gray-700 cursor-pointer" id="star-container">
-                    <span class="star hover:text-yellow-400 transition-colors" data-value="1">★</span>
-                    <span class="star hover:text-yellow-400 transition-colors" data-value="2">★</span>
-                    <span class="star hover:text-yellow-400 transition-colors" data-value="3">★</span>
-                    <span class="star hover:text-yellow-400 transition-colors" data-value="4">★</span>
-                    <span class="star hover:text-yellow-400 transition-colors" data-value="5">★</span>
+                    <span class="star hover:text-yellow-400 transition-colors" data-value="1">â˜…</span>
+                    <span class="star hover:text-yellow-400 transition-colors" data-value="2">â˜…</span>
+                    <span class="star hover:text-yellow-400 transition-colors" data-value="3">â˜…</span>
+                    <span class="star hover:text-yellow-400 transition-colors" data-value="4">â˜…</span>
+                    <span class="star hover:text-yellow-400 transition-colors" data-value="5">â˜…</span>
                 </div>
                 <input type="hidden" name="rating" id="rating-input" value="0" required>
                 <p id="rating-error" class="text-red-500 text-xs mt-2 hidden">Silakan pilih rating (1-5 bintang).</p>
@@ -133,3 +133,5 @@
     </script>
 </body>
 </html>
+
+

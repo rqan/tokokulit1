@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stores - ENY LEATHER®</title>
+    <title>Stores - TOKO RAFI</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{{ asset('js/tailwind-config.js') }}"></script>
@@ -18,7 +18,7 @@
     <!-- Header -->
     <header class="w-full px-8 py-6 flex justify-between items-center border-b-minimal border-lightBorder dark:border-darkBorder sticky top-0 z-40 bg-lightBg dark:bg-darkBg transition-colors">
         <div class="flex-1 flex justify-start">
-            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">ENY LEATHER®</a>
+            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">TOKO RAFI</a>
         </div>
         <div class="hidden md:flex flex-1 justify-center space-x-12 text-[10px] font-semibold tracking-[0.2em] uppercase">
             @if(strtolower(request('gender')) == 'men')
@@ -142,7 +142,7 @@
         
         <!-- Massive Footer Logo -->
         <div class="w-full overflow-hidden text-center pb-2 border-t-minimal border-lightBorder dark:border-darkBorder pt-8">
-            <h1 class="display-font text-[20vw] leading-none text-lightMain dark:text-darkMain select-none">ENY LEATHER®</h1>
+            <h1 class="display-font text-[20vw] leading-none text-lightMain dark:text-darkMain select-none">TOKO RAFI</h1>
         </div>
                     <div class="w-full flex justify-end px-8 py-4 text-[9px] font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted">
             <a href="https://mein-profile.vercel.app" target="_blank" rel="noopener noreferrer" class="hover:text-lightMain dark:hover:text-darkMain transition-colors">&copy; Copyright REGANDEWA 2026</a>
@@ -174,6 +174,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 

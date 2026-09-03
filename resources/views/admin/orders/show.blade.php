@@ -1,4 +1,4 @@
-@extends('admin.layout.main')
+﻿@extends('admin.layout.main')
 
 @section('title', 'DETAIL PESANAN')
 
@@ -219,7 +219,7 @@
                     </div>
                     
                     @php
-                        $waMessage = "Halo {$order->shipping_name},\n\nTerima kasih telah memesan di ENY LEATHER. Invoice untuk pesanan {$order->invoice_number} sudah siap.\n\nTotal Tagihan: Rp" . number_format($order->grand_total, 0, ',', '.') . "\n\nSilakan cek invoice lengkap dan cara pembayaran melalui link berikut:\n" . url("/invoice/{$order->invoice_number}");
+                        $waMessage = "Halo {$order->shipping_name},\n\nTerima kasih telah memesan di TOKO RAFI" . number_format($order->grand_total, 0, ',', '.') . "\n\nSilakan cek invoice lengkap dan cara pembayaran melalui link berikut:\n" . url("/invoice/{$order->invoice_number}");
                         $waLink = "https://wa.me/" . preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $order->shipping_phone)) . "?text=" . urlencode($waMessage);
                     @endphp
                     
@@ -354,3 +354,4 @@
     </div>
 </div>
 @endsection
+

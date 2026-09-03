@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog - ENY LEATHER</title>
+    <title>Katalog - TOKO RAFI</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{{ asset('js/tailwind-config.js') }}"></script>
@@ -16,9 +16,10 @@
     <!-- Header -->
     <header class="w-full px-8 py-6 flex justify-between items-center border-b-minimal border-lightBorder dark:border-darkBorder sticky top-0 z-40 bg-lightBg dark:bg-darkBg transition-colors">
         <div class="flex-1 flex justify-start">
-            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">ENY LEATHER&reg;</a>
+            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">TOKO RAFI</a>
         </div>
         <div class="hidden md:flex flex-1 justify-center space-x-12 text-[10px] font-semibold tracking-[0.2em] uppercase">
+            <a href="{{ url('/') }}" class="link-hover">Home</a>
             @if(strtolower(request('gender')) == 'men')
                 <a href="{{ url('/katalog?' . http_build_query(request()->except('gender'))) }}" class="link-hover text-red-500 hover:text-red-600">Back</a>
             @else
@@ -93,30 +94,23 @@
             @if(count($products) > 0)
                 <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                     @foreach ($products as $product)
-                        <div class="group flex flex-col cursor-pointer border border-transparent hover:border-lightBorder dark:hover:border-darkBorder transition-all pb-4">
+                        <a href="{{ url('/product/' . $product['id']) }}" class="group flex flex-col border border-transparent hover:border-lightBorder dark:hover:border-darkBorder transition-all pb-4">
                             <!-- Image -->
-                        <div class="w-full aspect-[3/2] bg-[#E5E5E5] dark:bg-[#1E1E1E] overflow-hidden flex items-center justify-center p-10 transition-colors relative"
-                            @if(session('isLoggedIn') || Auth::check())
-                                onclick="event.preventDefault(); event.stopPropagation(); openCartModal({{ htmlspecialchars(json_encode($product)) }});"
-                            @else
-                                onclick="event.preventDefault(); event.stopPropagation(); window.location.href='{{ url('/login') }}'"
-                            @endif
-                        >
-                            @if(!empty($product['image_url']))
-                                <img
-                                    src="{{ $product['image_url'] }}"
-                                    alt="{{ $product['name'] }}"
-                                    draggable="false"
-                                    class="object-cover w-full h-full grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 pointer-events-none"
-                                >
-                            @else
-                                <span class="display-font text-2xl text-lightBorder dark:text-darkBorder">NO IMAGE</span>
-                            @endif
-                        </div>
+                            <div class="w-full aspect-[3/2] bg-[#E5E5E5] dark:bg-[#1E1E1E] overflow-hidden flex items-center justify-center p-10 transition-colors relative">
+                                @if(!empty($product['image_url']))
+                                    <img
+                                        src="{{ $product['image_url'] }}"
+                                        alt="{{ $product['name'] }}"
+                                        draggable="false"
+                                        class="object-cover w-full h-full grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                                    >
+                                @else
+                                    <span class="display-font text-2xl text-lightBorder dark:text-darkBorder">NO IMAGE</span>
+                                @endif
+                            </div>
 
-                        <!-- Info -->
-                        <a href="{{ url('/product/' . $product['id']) }}" class="block">
-                            <div class="pt-4 flex flex-col justify-between">
+                            <!-- Info -->
+                            <div class="pt-4 flex flex-col justify-between px-4">
                                 <h3 class="display-font text-lg mb-1 text-lightMain dark:text-darkMain truncate">{{ $product['name'] }}</h3>
                                 <p class="text-[9px] tracking-widest uppercase text-lightMuted dark:text-darkMuted mb-2 truncate">{{ $product['category'] ?? $product['description'] }}</p>
                                 <div class="display-font text-md text-lightMain dark:text-darkMain font-semibold">
@@ -137,7 +131,7 @@
 
     <footer class="w-full pt-16 mt-auto">
         <div class="w-full overflow-hidden text-center pb-2 border-t-minimal border-lightBorder dark:border-darkBorder pt-8">
-            <h1 class="display-font text-[10vw] leading-none text-lightMain dark:text-darkMain select-none">ENY LEATHER</h1>
+            <h1 class="display-font text-[10vw] leading-none text-lightMain dark:text-darkMain select-none">TOKO RAFI</h1>
         </div>
         <div class="w-full flex justify-end px-8 py-4 text-[9px] font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted">
             <a href="https://mein-profile.vercel.app" target="_blank" rel="noopener noreferrer" class="hover:text-lightMain dark:hover:text-darkMain transition-colors">&copy; Copyright REGANDEWA 2026</a>
@@ -392,6 +386,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 

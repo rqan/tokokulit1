@@ -1,9 +1,9 @@
-@php 
+﻿@php 
     $role = session('role') ?? optional(Auth::user())->role ?? 'admin'; 
 @endphp
 <aside class="w-64 fixed top-0 left-0 h-screen border-r-minimal border-lightBorder dark:border-darkBorder bg-lightBg dark:bg-darkBg z-50 flex flex-col transition-colors">
     <div class="px-8 py-6 border-b-minimal border-lightBorder dark:border-darkBorder">
-        <div class="display-font text-3xl tracking-tight">ENY LEATHER</div>
+        <div class="display-font text-3xl tracking-tight">TOKO RAFI</div>
         <div class="text-[10px] font-semibold tracking-[0.2em] uppercase mt-1">Admin Panel</div>
     </div>
 
@@ -49,3 +49,4 @@
         @endif
     </nav>
 </aside>
+

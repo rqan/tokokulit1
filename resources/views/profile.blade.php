@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - ENY LEATHERÂ®</title>
+    <title>Profile - TOKO RAFI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{{ asset('js/tailwind-config.js') }}"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Space Grotesk', sans-serif; }
-        .display-font { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.05em; }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/ux.css') }}">
+    <script src="{{ asset('js/ux.js') }}"></script>
 </head>
-<body class="w-full relative antialiased bg-lightBg text-lightMain dark:bg-darkBg dark:text-darkMain min-h-screen flex flex-col">
+<body class="w-full relative antialiased selection:bg-lightMain selection:text-lightBg dark:selection:bg-darkMain dark:selection:text-darkBg bg-lightBg text-lightMain dark:bg-darkBg dark:text-darkMain min-h-screen flex flex-col">
     <header class="w-full px-8 py-6 flex justify-between items-center border-b border-lightBorder dark:border-darkBorder sticky top-0 z-40 bg-lightBg/90 dark:bg-darkBg/90 backdrop-blur-md">
         <div class="flex-1 flex justify-start">
-            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">ENY LEATHERÂ®</a>
+            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">TOKO RAFI</a>
+        </div>
+        <div class="hidden md:flex flex-1 justify-center space-x-12 text-[10px] font-semibold tracking-[0.2em] uppercase">
+            <a href="{{ url('/') }}" class="link-hover">Home</a>
+            <a href="{{ url('/katalog?gender=Men') }}" class="link-hover">Men</a>
+            <a href="{{ url('/katalog?gender=Women') }}" class="link-hover">Women</a>
         </div>
         <div class="flex-1 flex justify-end items-center space-x-6 md:space-x-8 text-[10px] font-semibold tracking-[0.2em] uppercase">
             <a href="{{ url('/katalog?focus_search=1') }}" class="hidden md:block link-hover">Search</a>
@@ -119,7 +122,7 @@
 
     <footer class="w-full pt-16 mt-auto">
         <div class="w-full overflow-hidden text-center pb-2 pt-8 border-t border-lightBorder dark:border-darkBorder">
-            <h1 class="display-font text-[10vw] leading-none text-lightMain dark:text-darkMain select-none">ENY LEATHERÂ®</h1>
+            <h1 class="display-font text-[10vw] leading-none text-lightMain dark:text-darkMain select-none">TOKO RAFI</h1>
         </div>
                     <div class="w-full flex justify-end px-8 py-4 text-[9px] font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted">
             <a href="https://mein-profile.vercel.app" target="_blank" rel="noopener noreferrer" class="hover:text-lightMain dark:hover:text-darkMain transition-colors">&copy; Copyright REGANDEWA 2026</a>

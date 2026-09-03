@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Keuangan & Penjualan — Admin Eny Leather</title>
+    <title>Laporan Keuangan & Penjualan â€” Admin TOKO RAFI</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-950 text-slate-100 p-8 antialiased">
@@ -16,10 +16,10 @@
             </div>
             <div class="flex gap-4">
                 <a href="{{ url('/admin/dashboard') }}" class="px-4 py-2 border border-slate-700 text-xs font-bold uppercase tracking-widest hover:bg-slate-800 transition-colors">
-                    ← Kembali ke Dashboard
+                    â† Kembali ke Dashboard
                 </a>
                 <a href="{{ route('admin.reports.export', ['start_date' => $startDate, 'end_date' => $endDate]) }}" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-widest rounded transition-colors shadow">
-                    📥 Ekspor ke Excel/CSV
+                    ðŸ“¥ Ekspor ke Excel/CSV
                 </a>
             </div>
         </header>
@@ -95,3 +95,5 @@
     </div>
 </body>
 </html>
+
+

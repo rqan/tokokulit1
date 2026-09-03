@@ -1,6 +1,6 @@
-@props([
-    'title' => 'ENY LEATHER Boutique — Luxury Fashion & Commercial Store',
-    'description' => 'Temukan koleksi busana eksklusif, gaun mewah, dan pakaian kustom terbaik di ENY LEATHER Boutique.',
+﻿@props([
+    'title' => 'TOKO RAFI
+    'description' => 'Temukan koleksi busana eksklusif, gaun mewah, dan pakaian kustom terbaik di TOKO RAFI
     'image' => asset('images/og-default.jpg'),
     'url' => url()->current(),
     'type' => 'website'
@@ -12,7 +12,7 @@
 <meta name="robots" content="index, follow">
 
 <!-- OpenGraph / WhatsApp Meta Tags -->
-<meta property="og:site_name" content="ENY LEATHER Boutique">
+<meta property="og:site_name" content="TOKO RAFI">
 <meta property="og:type" content="{{ $type }}">
 <meta property="og:url" content="{{ $url }}">
 <meta property="og:title" content="{{ $title }}">
@@ -26,3 +26,4 @@
 <meta name="twitter:title" content="{{ $title }}">
 <meta name="twitter:description" content="{{ $description }}">
 <meta name="twitter:image" content="{{ $image }}">
+

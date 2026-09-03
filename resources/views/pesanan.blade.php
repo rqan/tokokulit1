@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,7 @@
 
     <header class="w-full px-8 py-6 flex justify-between items-center border-b-minimal border-lightBorder dark:border-darkBorder sticky top-0 z-40 bg-lightBg dark:bg-darkBg transition-colors">
         <div class="flex-1 flex justify-start">
-            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">ENY LEATHER</a>
+            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">TOKO RAFI</a>
         </div>
         <div class="hidden md:flex flex-1 justify-center space-x-12 text-[10px] font-semibold tracking-[0.2em] uppercase">
             @if(strtolower(request('gender')) == 'men')
@@ -71,7 +71,7 @@
                             
                             <div class="text-[10px] tracking-widest uppercase text-lightMuted dark:text-darkMuted flex gap-4">
                                 <span>{{ $order->created_at->format('d M Y, H:i') }}</span>
-                                <span>•</span>
+                                <span>â€¢</span>
                                 <span>{{ $order->items->count() ?? 0 }} Produk</span>
                             </div>
                         </div>
@@ -120,6 +120,7 @@
     </script>
 </body>
 </html>
+
 
 
 

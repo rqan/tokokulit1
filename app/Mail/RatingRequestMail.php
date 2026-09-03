@@ -28,7 +28,7 @@ class RatingRequestMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Berikan Rating Anda - ENY LEATHER Store',
+            subject: 'Berikan Rating Anda - TOKO RAFI Store',
         );
     }
 

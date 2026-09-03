@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Invoice ENY LEATHER</title>
+    <title>Invoice TOKO RAFI</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
         .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
@@ -25,7 +25,7 @@
 </head>
 <body>
     <div class="header">
-        <h1 class="logo">ENY LEATHER</h1>
+        <h1 class="logo">TOKO RAFI</h1>
         <p style="margin:0; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;">Store</p>
     </div>
     
@@ -108,8 +108,10 @@
     </div>
     
     <div class="footer">
-        Terima kasih telah berbelanja di ENY LEATHER Store.<br>
+        Terima kasih telah berbelanja di TOKO RAFI<br>
         <a href="{{ url('/') }}" style="color: #888;">www.enyleather.com</a>
     </div>
 </body>
 </html>
+
+

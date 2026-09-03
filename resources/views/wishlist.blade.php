@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,7 @@
     <!-- Header -->
     <header class="w-full px-8 py-6 flex justify-between items-center border-b-minimal border-lightBorder dark:border-darkBorder sticky top-0 z-40 bg-lightBg dark:bg-darkBg transition-colors">
         <div class="flex-1 flex justify-start">
-            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">ENY LEATHER</a>
+            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">TOKO RAFI</a>
         </div>
         <div class="hidden md:flex flex-1 justify-center space-x-12 text-[10px] font-semibold tracking-[0.2em] uppercase">
             @if(strtolower(request('gender')) == 'men')
@@ -95,7 +95,7 @@
 
     <!-- Footer Minimalis -->
     <footer class="w-full px-8 py-12 border-t-minimal border-lightBorder dark:border-darkBorder flex flex-col md:flex-row justify-between items-center text-[10px] font-semibold tracking-[0.2em] uppercase text-lightSecondary dark:text-darkSecondary">
-        <div>© 2026 ENY LEATHER INC.</div>
+        <div>Â© 2026 TOKO RAFI</div>
         <div class="flex space-x-8 mt-4 md:mt-0">
             <a href="#" class="link-hover">Instagram</a>
             <a href="#" class="link-hover">Twitter</a>
@@ -104,5 +104,6 @@
 
 </body>
 </html>
+
 
 

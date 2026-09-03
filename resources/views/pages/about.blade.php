@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - ENY LEATHER®</title>
+    <title>About - TOKO RAFI</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{{ asset('js/tailwind-config.js') }}"></script>
@@ -18,7 +18,7 @@
     <!-- Header -->
     <header class="w-full px-8 py-6 flex justify-between items-center border-b-minimal border-lightBorder dark:border-darkBorder sticky top-0 z-40 bg-lightBg dark:bg-darkBg transition-colors">
         <div class="flex-1 flex justify-start">
-            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">ENY LEATHER®</a>
+            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">TOKO RAFI</a>
         </div>
         <div class="hidden md:flex flex-1 justify-center space-x-12 text-[10px] font-semibold tracking-[0.2em] uppercase">
             @if(strtolower(request('gender')) == 'men')
@@ -67,19 +67,19 @@
 
             <div class="text-left space-y-6 text-lg leading-relaxed text-lightMuted dark:text-darkMuted">
                 <p>
-                    <strong class="text-lightMain dark:text-darkMain">ENY LEATHER®</strong> berawal dari sebuah visi sederhana pada tahun 2015, di sebuah studio kecil di sudut kota Jakarta. Kami percaya bahwa fashion bukan sekadar pakaian yang Anda kenakan, melainkan bentuk ekspresi diri paling jujur tanpa perlu banyak bicara.
+                    <strong class="text-lightMain dark:text-darkMain">TOKO RAFI</strong> berawal dari sebuah visi sederhana pada tahun 2015, di sebuah studio kecil di sudut kota Magetan. Kami percaya bahwa fashion bukan sekadar pakaian yang Anda kenakan, melainkan bentuk ekspresi diri paling jujur tanpa perlu banyak bicara.
                 </p>
                 <p>
                     Kala itu, pendiri kami menyadari betapa sulitnya menemukan pakaian dengan desain minimalis, bahan berkualitas tinggi, namun dengan harga yang tetap masuk akal. Kebanyakan pilihan yang ada di pasar terjebak pada dua ekstrem: fast fashion yang mengorbankan kualitas dan etika, atau merek desainer dengan harga selangit.
                 </p>
                 <p>
-                    Berangkat dari kegelisahan tersebut, ENY LEATHER® lahir. Nama ENY LEATHER® sendiri diambil dari komitmen kami untuk menjadi "Eny Leather Andalan" yang mengedepankan esensi dibandingkan eksistensi semata. Koleksi pertama kami hanya terdiri dari 5 potong kemeja monokrom, yang dijahit tangan oleh pengrajin lokal dengan penuh dedikasi.
+                    Berangkat dari kegelisahan tersebut, TOKO RAFI lahir. Nama "TOKO RAFI" yang mengedepankan esensi dibandingkan eksistensi semata. Koleksi pertama kami hanya terdiri dari 5 potong kemeja monokrom, yang dijahit tangan oleh pengrajin lokal dengan penuh dedikasi.
                 </p>
                 <p>
                     Seiring berjalannya waktu, dukungan dari pelanggan setia membawa kami bertumbuh. Kami mulai merambah pasar online melalui platform e-commerce dan akhirnya membuka toko offline pertama kami. 
                 </p>
                 <p>
-                    Hari ini, ENY LEATHER® telah menjadi salah satu pemain utama dalam skena fashion lokal. Meskipun skala kami membesar, filosofi kami tetap sama: menciptakan karya timeless yang menemani setiap langkah Anda, hari ini, esok, dan selamanya.
+                    Hari ini, TOKO RAFI telah menjadi salah satu pemain utama dalam skena fashion lokal. Meskipun skala kami membesar, filosofi kami tetap sama: menciptakan karya timeless yang menemani setiap langkah Anda, hari ini, esok, dan selamanya.
                 </p>
             </div>
         </div>
@@ -121,7 +121,7 @@
         
         <!-- Massive Footer Logo -->
         <div class="w-full overflow-hidden text-center pb-2 border-t-minimal border-lightBorder dark:border-darkBorder pt-8">
-            <h1 class="display-font text-[20vw] leading-none text-lightMain dark:text-darkMain select-none">ENY LEATHER®</h1>
+            <h1 class="display-font text-[20vw] leading-none text-lightMain dark:text-darkMain select-none">TOKO RAFI</h1>
         </div>
                     <div class="w-full flex justify-end px-8 py-4 text-[9px] font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted">
             <a href="https://mein-profile.vercel.app" target="_blank" rel="noopener noreferrer" class="hover:text-lightMain dark:hover:text-darkMain transition-colors">&copy; Copyright REGANDEWA 2026</a>
@@ -153,6 +153,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 

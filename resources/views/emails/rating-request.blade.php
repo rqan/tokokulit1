@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Beri Ulasan - ENY LEATHER</title>
+    <title>Beri Ulasan - TOKO RAFI</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
         .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="header">
-        <h1 class="logo">ENY LEATHER</h1>
+        <h1 class="logo">TOKO RAFI</h1>
         <p style="margin:0; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;">Store</p>
     </div>
     
@@ -27,7 +27,7 @@
     <div class="message-box">
         <p style="margin-top: 0;">Pesanan <strong>{{ $order->invoice_number }}</strong> Anda telah selesai. Kami harap Anda puas dengan produk kami.</p>
         
-        <div class="stars">★★★★★</div>
+        <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
         
         <p>Kami sangat menghargai jika Anda bersedia meluangkan waktu untuk memberikan ulasan. Ulasan Anda sangat berarti untuk membantu kami terus berkembang.</p>
         
@@ -38,8 +38,10 @@
     <a href="{{ $ratingUrl }}" style="word-break: break-all; color: #3b82f6;">{{ $ratingUrl }}</a></p>
     
     <div class="footer">
-        Terima kasih atas kepercayaan Anda - ENY LEATHER Store<br>
+        Terima kasih atas kepercayaan Anda - TOKO RAFI<br>
         <a href="{{ url('/') }}" style="color: #888;">www.enyleather.com</a>
     </div>
 </body>
 </html>
+
+

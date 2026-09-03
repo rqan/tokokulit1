@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,7 @@
 
     <header class="w-full px-8 py-6 flex justify-between items-center border-b-minimal border-lightBorder dark:border-darkBorder sticky top-0 z-40 bg-lightBg dark:bg-darkBg transition-colors">
         <div class="flex-1 flex justify-start">
-            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">ENY LEATHER</a>
+            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">TOKO RAFI</a>
         </div>
         <div class="flex-1 flex justify-end items-center space-x-6 md:space-x-8 text-[10px] font-semibold tracking-[0.2em] uppercase">
             <a href="{{ url('/katalog?focus_search=1') }}" class="hidden md:block link-hover">Search</a>
@@ -46,7 +46,7 @@
             <div>
                 <h1 class="display-font text-5xl uppercase mb-2">Detail Pesanan</h1>
                 <p class="text-[10px] tracking-widest uppercase text-lightMuted dark:text-darkMuted">
-                    @if($order->invoice_number){{ $order->invoice_number }}@else<span class="text-red-500 font-bold">BELUM ADA INVOICE</span>@endif • {{ $order->created_at->format('d M Y, H:i') }}
+                    @if($order->invoice_number){{ $order->invoice_number }}@else<span class="text-red-500 font-bold">BELUM ADA INVOICE</span>@endif â€¢ {{ $order->created_at->format('d M Y, H:i') }}
                 </p>
             </div>
             @if($order->invoice_number)
@@ -146,7 +146,7 @@
 
                         @if(isset($snapToken) && $snapToken)
                             <div class="mb-8 p-6 border-2 border-emerald-500 bg-emerald-50/10 dark:bg-emerald-950/20 text-center space-y-4 rounded-lg">
-                                <h3 class="display-font text-xl uppercase text-emerald-600 dark:text-emerald-400">⚡ Pembayaran Instan via Midtrans Gateway</h3>
+                                <h3 class="display-font text-xl uppercase text-emerald-600 dark:text-emerald-400">âš¡ Pembayaran Instan via Midtrans Gateway</h3>
                                 <p class="text-[10px] tracking-widest uppercase text-lightMuted dark:text-darkMuted">Bayar cepat & verifikasi otomatis via QRIS (GoPay/ShopeePay/OVO), Virtual Account Bank (BCA, Mandiri, BRI, BNI), atau Kartu Kredit</p>
                                 <button id="pay-button" type="button" class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white text-xs tracking-[0.2em] uppercase font-bold transition-all shadow-md">
                                     Bayar Sekarang (Midtrans Gateway)
@@ -226,9 +226,9 @@
                                 <div class="flex text-yellow-500 text-lg">
                                     @for($i = 1; $i <= 5; $i++)
                                         @if($i <= $order->rating->rating)
-                                            <span>★</span>
+                                            <span>â˜…</span>
                                         @else
-                                            <span class="text-gray-300 dark:text-gray-700">★</span>
+                                            <span class="text-gray-300 dark:text-gray-700">â˜…</span>
                                         @endif
                                     @endfor
                                 </div>
@@ -367,6 +367,7 @@
     @endif
 </body>
 </html>
+
 
 
 

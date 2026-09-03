@@ -257,7 +257,7 @@ class OrderController extends Controller
             $phone = WhatsAppService::formatPhone($order->shipping_phone);
             $message = urlencode(
                 "Halo {$order->shipping_name}! 🙏\n\n"
-                . "Terima kasih sudah berbelanja di ENY LEATHER.\n"
+                . "Terima kasih sudah berbelanja di TOKO RAFI.\n"
                 . "Pesanan Anda ({$order->invoice_number}) telah selesai.\n\n"
                 . "Kami sangat menghargai jika Anda bersedia memberikan rating:\n"
                 . "{$ratingUrl}\n\n"

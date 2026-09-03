@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -31,7 +31,7 @@
         <!-- Header -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end border-b-2 border-gray-200 pb-8 mb-8">
             <div>
-                <h1 class="display-font text-5xl md:text-6xl tracking-tight mb-2">ENY LEATHER</h1>
+                <h1 class="display-font text-5xl md:text-6xl tracking-tight mb-2">TOKO RAFI</h1>
                 <p class="text-xs text-gray-500 uppercase tracking-widest">Official Web Store</p>
             </div>
             <div class="text-right mt-6 md:mt-0">
@@ -141,4 +141,5 @@
 
 </body>
 </html>
+
 

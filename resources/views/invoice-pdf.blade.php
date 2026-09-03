@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Invoice PDF — {{ $order->invoice_number }}</title>
+    <title>Invoice PDF â€” {{ $order->invoice_number }}</title>
     <style>
         body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #111; padding: 40px; margin: 0; background: #fff; }
         .header { display: flex; justify-content: space-between; border-b: 2px solid #000; padding-bottom: 20px; margin-bottom: 30px; }
@@ -30,12 +30,12 @@
 <body>
 
     <div class="no-print" style="margin-bottom: 20px; text-align: right;">
-        <button onclick="window.print()" style="padding: 10px 20px; background: #000; color: #fff; border: none; font-size: 12px; font-weight: bold; cursor: pointer;">🖨️ Cetak / Simpan sebagai PDF</button>
+        <button onclick="window.print()" style="padding: 10px 20px; background: #000; color: #fff; border: none; font-size: 12px; font-weight: bold; cursor: pointer;">ðŸ–¨ï¸ Cetak / Simpan sebagai PDF</button>
     </div>
 
     <div class="header">
         <div>
-            <div class="eny-leather">ENY LEATHER BOUTIQUE</div>
+            <div class="eny-leather">TOKO RAFI</div>
             <div class="date">Official Commercial Invoice</div>
         </div>
         <div class="inv-title">
@@ -106,8 +106,8 @@
     </div>
 
     <div class="footer">
-        Terima kasih telah berbelanja di ENY LEATHER Boutique.<br>
-        Dokumen ini merupakan bukti transaksi yang sah dari ENY LEATHER Commercial Store.
+        Terima kasih telah berbelanja di TOKO RAFI<br>
+        Dokumen ini merupakan bukti transaksi yang sah dari TOKO RAFI
     </div>
 
     <script>
@@ -119,4 +119,5 @@
 
 </body>
 </html>
+
 

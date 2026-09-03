@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola Kupon & Voucher — Admin Eny Leather</title>
+    <title>Kelola Kupon & Voucher â€” Admin TOKO RAFI</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-950 text-slate-100 p-8 antialiased">
@@ -15,7 +15,7 @@
                 <p class="text-xs text-slate-400 mt-1">Buat kode promo, diskon persentase, dan nominal tetap untuk pelanggan.</p>
             </div>
             <a href="{{ url('/admin/dashboard') }}" class="px-4 py-2 border border-slate-700 text-xs font-bold uppercase tracking-widest hover:bg-slate-800 transition-colors">
-                ← Kembali ke Dashboard
+                â† Kembali ke Dashboard
             </a>
         </header>
 
@@ -32,7 +32,7 @@
                 @csrf
                 <div>
                     <label class="block uppercase font-bold text-slate-400 mb-1">Kode Voucher</label>
-                    <input type="text" name="code" required placeholder="MISAL: ENY LEATHER50" class="w-full bg-slate-950 border border-slate-700 p-2.5 rounded text-white uppercase font-mono">
+                    <input type="text" name="code" required placeholder="MISAL: TOKO RAFI" class="w-full bg-slate-950 border border-slate-700 p-2.5 rounded text-white uppercase font-mono">
                 </div>
                 <div>
                     <label class="block uppercase font-bold text-slate-400 mb-1">Tipe Diskon</label>
@@ -98,3 +98,5 @@
     </div>
 </body>
 </html>
+
+

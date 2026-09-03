@@ -69,7 +69,7 @@ class WhatsAppService
     {
         $invoiceUrl = route('invoice.show', $order->invoice_number ?? $order->id);
         $text = "Halo {$order->shipping_name}! 🛍️\n\n"
-            . "Pesanan Anda di ENY LEATHER Boutique telah dibuat.\n"
+            . "Pesanan Anda di TOKO RAFI Boutique telah dibuat.\n"
             . "No. Invoice: " . ($order->invoice_number ?? "ORDER-{$order->id}") . "\n"
             . "Total Pembayaran: Rp" . number_format($order->grand_total ?? $order->subtotal, 0, ',', '.') . "\n\n"
             . "Silakan cek invoice & bayar melalui link berikut:\n{$invoiceUrl}\n\n"
@@ -87,7 +87,7 @@ class WhatsAppService
             . "Pesanan Anda (Invoice: {$order->invoice_number}) telah dikirim!\n"
             . "Kurir: " . strtoupper($order->shipping_courier ?? 'JNE') . "\n"
             . "No. Resi: {$order->tracking_number}\n\n"
-            . "Terima kasih telah berbelanja di ENY LEATHER Boutique! ✨";
+            . "Terima kasih telah berbelanja di TOKO RAFI Boutique! ✨";
 
         self::sendDirectMessage($order->shipping_phone, $text);
     }
@@ -102,7 +102,7 @@ class WhatsAppService
 
         $message = urlencode(
             "Halo {$order->shipping_name}! 🌟\n\n"
-            . "Terima kasih telah berbelanja di ENY LEATHER Store.\n"
+            . "Terima kasih telah berbelanja di TOKO RAFI Store.\n"
             . "Pesanan Anda (Invoice: {$order->invoice_number}) telah selesai.\n\n"
             . "Mohon kesediaannya untuk memberikan rating dan ulasan pesanan Anda melalui link berikut:\n"
             . "{$ratingUrl}\n\n"

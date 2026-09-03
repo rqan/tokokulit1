@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,7 @@
     <!-- Header -->
     <header class="w-full px-8 py-6 flex justify-between items-center border-b-minimal border-lightBorder dark:border-darkBorder sticky top-0 z-40 bg-lightBg dark:bg-darkBg transition-colors">
         <div class="flex-1 flex justify-start">
-            <a href="https://www.rdewastudio.com" class="display-font text-4xl tracking-tight">ENY LEATHER&reg;</a>
+            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">TOKO RAFI</a>
         </div>
         <div class="hidden md:flex flex-1 justify-center space-x-12 text-[10px] font-semibold tracking-[0.2em] uppercase">
             @if(strtolower(request('gender')) == 'men')
@@ -35,6 +35,7 @@
             @if(session('isLoggedIn') || Auth::check())
                 <a href="{{ url('/pelanggan/cart') }}" class="link-hover">Cart ({{ count(session('cart', [])) }})</a>
                 <a href="{{ url('/profile') }}" class="link-hover">Profile</a>
+                <button id="themeToggle" class="link-hover uppercase focus:outline-none">Theme</button>
                 <a href="{{ url('/logout') }}" class="link-hover text-red-500">Logout</a>
             @else
                 <button id="themeToggle" class="link-hover uppercase focus:outline-none">Theme</button>
@@ -113,30 +114,23 @@
                     @foreach ($products as $product)
                     <!-- Card -->
                     <div class="group flex-none snap-start w-[60vw] sm:w-[35vw] md:w-[25vw] lg:w-[18vw] flex flex-col cursor-pointer border-r-minimal border-lightBorder dark:border-darkBorder transition-all">
+                        <a href="{{ url('/product/' . $product['id']) }}" class="block h-full flex flex-col">
+                            <!-- Image -->
+                            <div class="w-full aspect-[3/2] bg-[#E5E5E5] dark:bg-[#1E1E1E] overflow-hidden flex items-center justify-center p-10 transition-colors relative">
+                                @if(!empty($product['image_url']))
+                                    <img
+                                        src="{{ $product['image_url'] }}"
+                                        alt="{{ $product['name'] }}"
+                                        draggable="false"
+                                        class="object-cover w-full h-full grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                                    >
+                                @else
+                                    <span class="display-font text-2xl text-lightBorder dark:text-darkBorder">NO IMAGE</span>
+                                @endif
+                            </div>
 
-                        <!-- Image -->
-                        <div class="w-full aspect-[3/2] bg-[#E5E5E5] dark:bg-[#1E1E1E] overflow-hidden flex items-center justify-center p-10 transition-colors relative"
-                            @if(session('isLoggedIn') || Auth::check())
-                                onclick="event.preventDefault(); event.stopPropagation(); openCartModal({{ htmlspecialchars(json_encode($product)) }});"
-                            @else
-                                onclick="event.preventDefault(); event.stopPropagation(); window.location.href='{{ url('/login') }}'"
-                            @endif
-                        >
-                            @if(!empty($product['image_url']))
-                                <img
-                                    src="{{ $product['image_url'] }}"
-                                    alt="{{ $product['name'] }}"
-                                    draggable="false"
-                                    class="object-cover w-full h-full grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 pointer-events-none"
-                                >
-                            @else
-                                <span class="display-font text-2xl text-lightBorder dark:text-darkBorder">NO IMAGE</span>
-                            @endif
-                        </div>
-
-                        <!-- Info -->
-                        <a href="{{ url('/product/' . $product['id']) }}" class="block">
-                        <div class="p-5 flex justify-between items-start border-t-minimal border-lightBorder dark:border-darkBorder">
+                            <!-- Info -->
+                            <div class="p-5 flex justify-between items-start border-t-minimal border-lightBorder dark:border-darkBorder flex-1">
                             <div class="flex-1 min-w-0 pr-4">
                                 <h3 class="display-font text-xl mb-1 text-lightMain dark:text-darkMain truncate">{{ $product['name'] }}</h3>
                                 <p class="text-[9px] tracking-widest uppercase text-lightMuted dark:text-darkMuted truncate">{{ $product['category'] ?? $product['description'] }}</p>
@@ -258,7 +252,7 @@
         
         <!-- Massive Footer Logo -->
         <div class="w-full overflow-hidden text-center pb-2 border-t-minimal border-lightBorder dark:border-darkBorder pt-8">
-            <h1 class="display-font text-[20vw] leading-none text-lightMain dark:text-darkMain select-none">ENY LEATHER&reg;</h1>
+            <h1 class="display-font text-[20vw] leading-none text-lightMain dark:text-darkMain select-none">TOKO RAFI</h1>
         </div>
                     <div class="w-full flex justify-end px-8 py-4 text-[9px] font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted">
             <a href="https://mein-profile.vercel.app" target="_blank" rel="noopener noreferrer" class="hover:text-lightMain dark:hover:text-darkMain transition-colors">&copy; Copyright REGANDEWA 2026</a>
@@ -268,7 +262,7 @@
     <!-- Scripts -->
     <script>
         // =============================================
-        // PRODUCT — Drag-to-scroll + Progress bar
+        // PRODUCT â€” Drag-to-scroll + Progress bar
         // =============================================
         const track = document.getElementById('product-scroll');
         const progress = document.getElementById('scroll-progress');
@@ -522,6 +516,8 @@
 
 </body>
 </html>
+
+
 
 
 

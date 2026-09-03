@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - ENY LEATHER</title>
+    <title>Contact Us - TOKO RAFI</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{{ asset('js/tailwind-config.js') }}"></script>
@@ -18,7 +18,7 @@
     <!-- Header -->
     <header class="w-full px-8 py-6 flex justify-between items-center border-b-minimal border-lightBorder dark:border-darkBorder sticky top-0 z-40 bg-lightBg dark:bg-darkBg transition-colors">
         <div class="flex-1 flex justify-start">
-            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">ENY LEATHER</a>
+            <a href="{{ url('/') }}" class="display-font text-4xl tracking-tight">TOKO RAFI</a>
         </div>
         <div class="hidden md:flex flex-1 justify-center space-x-12 text-[10px] font-semibold tracking-[0.2em] uppercase">
             @if(strtolower(request('gender')) == 'men')
@@ -66,10 +66,10 @@
             <!-- Fraud Warning -->
             <div class="bg-gray-100 dark:bg-gray-900 p-8 rounded-lg mb-12 border border-gray-200 dark:border-gray-800">
                 <h3 class="text-xl font-bold mb-4">Lindungi diri dari penipuan</h3>
-                <p class="mb-4">Berikut hal-hal yang dapat Anda lakukan saat menerima pesan dari siapapun yang mengatasnamakan ENY LEATHER:</p>
-                <p class="mb-4">ENY LEATHER telah mengetahui adanya pesan tidak resmi melalui Facebook / WhatsApp / SMS / Email yang menawarkan penghasilan tambahan atau peluang kerja yang mengatasnamakan ENY LEATHER.</p>
-                <p class="text-red-500 font-semibold mb-4">Kami ingin mengingatkan seluruh pelanggan bahwa pesan tidak resmi tersebut bukan dari ENY LEATHER atau afiliasi kami, dan kami meminta pelanggan ENY LEATHER untuk waspada terhadap penipuan.</p>
-                <p>Kami pastikan bahwa tidak ada data pribadi pelanggan ENY LEATHER yang tersebar. ENY LEATHER sangat mengutamakan perlindungan data pribadi pelanggan. Pemberitahuan ini kami buat untuk memastikan bahwa seluruh pelanggan kami mengetahui adanya insiden penipuan ini dan untuk senantiasa waspada.</p>
+                <p class="mb-4">Berikut hal-hal yang dapat Anda lakukan saat menerima pesan dari siapapun yang mengatasnamakan TOKO RAFI</p>
+                <p class="mb-4">TOKO RAFI</p>
+                <p class="text-red-500 font-semibold mb-4">Kami ingin mengingatkan seluruh pelanggan bahwa pesan tidak resmi tersebut bukan dari TOKO RAFI</p>
+                <p>Kami pastikan bahwa tidak ada data pribadi pelanggan TOKO RAFI</p>
             </div>
 
             <!-- Contact Options -->
@@ -154,7 +154,7 @@
         
         <!-- Massive Footer Logo -->
         <div class="w-full overflow-hidden text-center pb-2 border-t-minimal border-lightBorder dark:border-darkBorder pt-8">
-            <h1 class="display-font text-[20vw] leading-none text-lightMain dark:text-darkMain select-none">ENY LEATHER</h1>
+            <h1 class="display-font text-[20vw] leading-none text-lightMain dark:text-darkMain select-none">TOKO RAFI</h1>
         </div>
                     <div class="w-full flex justify-end px-8 py-4 text-[9px] font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted">
             <a href="https://mein-profile.vercel.app" target="_blank" rel="noopener noreferrer" class="hover:text-lightMain dark:hover:text-darkMain transition-colors">&copy; Copyright REGANDEWA 2026</a>
@@ -186,6 +186,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
