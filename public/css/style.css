@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;600&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.display-font {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    line-height: 0.8;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+.link-hover {
+    position: relative;
+    display: inline-block;
+}
+.link-hover::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+}
+.link-hover:hover::after {
+    width: 100%;
+}
+
+.border-b-minimal { border-bottom-width: 1px; border-style: solid; }
+.border-r-minimal { border-right-width: 1px; border-style: solid; }
+.border-t-minimal { border-top-width: 1px; border-style: solid; }
+
+/* Hide scrollbar for the drum links */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

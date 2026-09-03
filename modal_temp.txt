@@ -1,0 +1,139 @@
+<!-- Add to Cart Modal -->
+    <div id="cartModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-opacity opacity-0">
+        <div class="bg-lightBg dark:bg-darkBg border border-lightBorder dark:border-darkBorder w-full max-w-md p-6 relative transform scale-95 transition-transform duration-300">
+            <button onclick="closeCartModal()" class="absolute top-4 right-4 text-lightMuted dark:text-darkMuted hover:text-lightMain dark:hover:text-darkMain">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 class="display-font text-2xl mb-2" id="modalProductName">Product Name</h2>
+            <p class="text-xs tracking-widest uppercase text-lightMuted dark:text-darkMuted mb-6" id="modalProductPrice">Rp0</p>
+            
+            <form id="cartModalForm" onsubmit="submitCartForm(event)" class="space-y-4">
+                @csrf
+                <input type="hidden" name="product_id" id="modalProductId">
+                
+                <div id="modalSizeContainer" class="hidden flex-col space-y-2">
+                    <label class="text-[10px] tracking-widest uppercase font-bold">Ukuran</label>
+                    <select name="size" id="modalSize" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-3 text-sm focus:outline-none">
+                        <option value="">Pilih Ukuran</option>
+                    </select>
+                </div>
+
+                <div id="modalColorContainer" class="hidden flex-col space-y-2">
+                    <label class="text-[10px] tracking-widest uppercase font-bold">Warna</label>
+                    <select name="color" id="modalColor" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-3 text-sm focus:outline-none">
+                        <option value="">Pilih Warna</option>
+                    </select>
+                </div>
+                
+                <div class="flex flex-col space-y-2">
+                    <label class="text-[10px] tracking-widest uppercase font-bold">Jumlah</label>
+                    <input type="number" name="quantity" id="modalQuantity" value="1" min="1" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-3 text-sm focus:outline-none">
+                </div>
+
+                <button type="submit" class="w-full bg-lightMain dark:bg-darkMain text-lightBg dark:text-darkBg py-4 text-[10px] tracking-[0.2em] uppercase font-bold mt-4 hover:opacity-90">
+                    Konfirmasi Tambah
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotif" class="fixed bottom-6 right-6 z-[110] bg-lightMain dark:bg-darkMain text-lightBg dark:text-darkBg px-6 py-4 translate-y-24 opacity-0 transition-all duration-300 flex items-center space-x-3 shadow-lg">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <span class="text-xs font-bold tracking-widest uppercase">Berhasil ditambahkan ke keranjang!</span>
+    </div>
+
+    <script>
+        const cartModal = document.getElementById('cartModal');
+        const modalSizeContainer = document.getElementById('modalSizeContainer');
+        const modalColorContainer = document.getElementById('modalColorContainer');
+        const modalSize = document.getElementById('modalSize');
+        const modalColor = document.getElementById('modalColor');
+
+        function openCartModal(product) {
+            document.getElementById('modalProductId').value = product.id;
+            document.getElementById('modalProductName').innerText = product.name;
+            document.getElementById('modalProductPrice').innerText = 'Rp' + parseInt(product.price).toLocaleString('id-ID');
+            document.getElementById('modalQuantity').max = product.stock || 100;
+            document.getElementById('modalQuantity').value = 1;
+
+            // Handle Sizes
+            if (product.sizes && product.sizes.length > 0) {
+                modalSizeContainer.classList.remove('hidden');
+                modalSizeContainer.classList.add('flex');
+                modalSize.innerHTML = '<option value="">Pilih Ukuran (opsional)</option>';
+                product.sizes.forEach(size => {
+                    modalSize.innerHTML += `<option value="${size}">${size}</option>`;
+                });
+            } else {
+                modalSizeContainer.classList.add('hidden');
+                modalSizeContainer.classList.remove('flex');
+                modalSize.innerHTML = '';
+            }
+
+            // Handle Colors
+            if (product.colors && product.colors.length > 0) {
+                modalColorContainer.classList.remove('hidden');
+                modalColorContainer.classList.add('flex');
+                modalColor.innerHTML = '<option value="">Pilih Warna (opsional)</option>';
+                product.colors.forEach(color => {
+                    modalColor.innerHTML += `<option value="${color}">${color}</option>`;
+                });
+            } else {
+                modalColorContainer.classList.add('hidden');
+                modalColorContainer.classList.remove('flex');
+                modalColor.innerHTML = '';
+            }
+
+            cartModal.classList.remove('hidden');
+            setTimeout(() => {
+                cartModal.classList.remove('opacity-0');
+                cartModal.firstElementChild.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeCartModal() {
+            cartModal.classList.add('opacity-0');
+            cartModal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => {
+                cartModal.classList.add('hidden');
+            }, 300);
+        }
+
+        function submitCartForm(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+
+            fetch("{{ url('pelanggan/cart/add') }}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                closeCartModal();
+                                if (data.cart_count !== undefined) {
+                    const cartLinks = document.querySelectorAll('a[href*="/pelanggan/cart"]');
+                    cartLinks.forEach(link => {
+                        link.innerText = 'Cart (' + data.cart_count + ')';
+                    });
+                }
+                showToast();
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Terjadi kesalahan.');
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toastNotif');
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+    </script>

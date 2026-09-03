@@ -1,0 +1,95 @@
+/* Global Smooth Scrolling & Page Transitions */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+}
+
+body.page-loaded {
+    opacity: 1;
+}
+
+body.page-exit {
+    opacity: 0;
+}
+
+/* Scroll Reveal / Entry Animations */
+.reveal-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1), transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+.reveal-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Base transitions for interactive elements */
+a, input, select, textarea, .transition-smooth {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 250ms;
+}
+
+/* Enhanced Micro-interactions for Cards and Buttons */
+.card, .product-card, .hover-scale-btn, .btn, .group\/card, .hover-scale-card {
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
+}
+
+/* Avoid scaling up absolute elements like theme toggle, assuming it has fixed/absolute class, let's use a generic class for cards */
+.card:hover, .product-card:hover, .hover-scale-card:hover, .group:hover > .product-image-container {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+}
+
+.hover-scale-btn:hover, .btn:hover {
+    transform: scale(1.02);
+}
+.hover-scale-btn:active, .btn:active {
+    transform: scale(0.98);
+}
+
+/* Focus states for accessibility */
+input:focus, textarea:focus, select:focus, button:focus-visible, a:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4);
+}
+
+/* Smooth UI Component Transitions (Modals, Dropdowns) */
+.transition-enter {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+}
+.transition-enter-active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1), transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.transition-exit {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+.transition-exit-active {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+    transition: opacity 200ms cubic-bezier(0.4, 0, 1, 1), transform 200ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* Backdrop Fade */
+.backdrop-enter {
+    opacity: 0;
+}
+.backdrop-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-out;
+}
+.backdrop-exit-active {
+    opacity: 0;
+    transition: opacity 200ms ease-in;
+}
