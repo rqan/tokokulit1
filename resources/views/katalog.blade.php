@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -47,7 +47,7 @@
 
     <div class="flex flex-col md:flex-row min-h-screen px-8 py-8 gap-12">
         <!-- Sidebar -->
-        <aside class="w-full md:w-48 flex-shrink-0">
+        <aside class="w-full md:w-48 flex-shrink-0 md:sticky md:top-28 h-max">
             <!-- Search -->
             <div class="mb-8 relative">
                 <form action="{{ url('/katalog') }}" method="GET">
@@ -118,7 +118,6 @@
                                 </div>
                             </div>
                         </a>
-                    </div>
                     @endforeach
                 </div>
             @else

@@ -159,7 +159,7 @@
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product['id'] }}">
                     <button type="submit" class="w-full py-4 px-6 rounded-full border border-lightBorder dark:border-darkBorder text-xs uppercase tracking-[0.2em] font-bold hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors mt-2 flex justify-center items-center gap-2">
-                        <span>â™¡ Tambahkan ke Wishlist</span>
+                        <span>&#9825; TAMBAHKAN KE WISHLIST</span>
                     </button>
                 </form>
 
