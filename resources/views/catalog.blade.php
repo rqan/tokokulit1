@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -116,7 +116,7 @@
                     <div class="group flex-none snap-start w-[60vw] sm:w-[35vw] md:w-[25vw] lg:w-[18vw] flex flex-col cursor-pointer border-r-minimal border-lightBorder dark:border-darkBorder transition-all">
                         <a href="{{ url('/product/' . $product['id']) }}" class="block h-full flex flex-col">
                             <!-- Image -->
-                            <div class="w-full aspect-[3/2] bg-[#E5E5E5] dark:bg-[#1E1E1E] overflow-hidden flex items-center justify-center p-10 transition-colors relative">
+                            <div class="w-full aspect-[3/2] bg-[#E5E5E5] dark:bg-[#1E1E1E] overflow-hidden flex items-center justify-center transition-colors relative">
                                 @if(!empty($product['image_url']))
                                     <img
                                         src="{{ $product['image_url'] }}"

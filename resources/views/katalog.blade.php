@@ -92,11 +92,11 @@
             </div>
 
             @if(count($products) > 0)
-                <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
                     @foreach ($products as $product)
                         <a href="{{ url('/product/' . $product['id']) }}" class="group flex flex-col border border-transparent hover:border-lightBorder dark:hover:border-darkBorder transition-all pb-4">
                             <!-- Image -->
-                            <div class="w-full aspect-[3/2] bg-[#E5E5E5] dark:bg-[#1E1E1E] overflow-hidden flex items-center justify-center p-10 transition-colors relative">
+                            <div class="w-full aspect-[3/2] bg-[#E5E5E5] dark:bg-[#1E1E1E] overflow-hidden flex items-center justify-center transition-colors relative">
                                 @if(!empty($product['image_url']))
                                     <img
                                         src="{{ $product['image_url'] }}"
