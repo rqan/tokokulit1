@@ -1,4 +1,4 @@
-﻿@extends('admin.layout.main')
+@extends('admin.layout.main')
 @section('title', $title ?? '')
 @section('content')
 
@@ -35,6 +35,33 @@
                     </div>
                 </div>
             @endforeach
+
+            <!-- Tambah Online Store Baru -->
+            <div class="border border-lightBorder dark:border-darkBorder p-4 rounded bg-lightBg dark:bg-[#1E1E1E] mt-4 border-dashed">
+                <div class="flex justify-between items-center mb-4 border-b border-lightBorder dark:border-darkBorder pb-2">
+                    <h4 class="font-semibold text-lg uppercase tracking-widest text-lightMain dark:text-darkMain">+ Tambah Toko Baru</h4>
+                    <label class="flex items-center cursor-pointer">
+                        <span class="mr-2 text-xs font-bold uppercase">Tampilkan:</span>
+                        <input type="checkbox" name="new_online_store[is_active]" value="1" checked class="w-5 h-5 accent-lightMain dark:accent-darkMain">
+                    </label>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Nama Toko</label>
+                        <input type="text" name="new_online_store[name]" placeholder="Nama Toko (opsional)" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-2 rounded focus:outline-none focus:border-lightMain dark:focus:border-darkMain">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Keterangan</label>
+                        <input type="text" name="new_online_store[description]" placeholder="Keterangan singkat" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-2 rounded focus:outline-none focus:border-lightMain dark:focus:border-darkMain">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">URL / Link</label>
+                        <input type="text" name="new_online_store[url]" placeholder="https://" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-2 rounded focus:outline-none focus:border-lightMain dark:focus:border-darkMain">
+                    </div>
+                </div>
+                <p class="text-[10px] text-lightMuted dark:text-darkMuted mt-3">* Isi form di atas dan klik Simpan untuk menambah toko online baru.</p>
+            </div>
         </div>
     </div>
 
@@ -68,6 +95,33 @@
                     </div>
                 </div>
             @endforeach
+
+            <!-- Tambah Offline Store Baru -->
+            <div class="border border-lightBorder dark:border-darkBorder p-4 rounded bg-lightBg dark:bg-[#1E1E1E] mt-4 border-dashed">
+                <div class="flex justify-between items-center mb-4 border-b border-lightBorder dark:border-darkBorder pb-2">
+                    <h4 class="font-semibold text-lg uppercase tracking-widest text-lightMain dark:text-darkMain">+ Tambah Toko Baru</h4>
+                    <label class="flex items-center cursor-pointer">
+                        <span class="mr-2 text-xs font-bold uppercase">Tampilkan:</span>
+                        <input type="checkbox" name="new_offline_store[is_active]" value="1" checked class="w-5 h-5 accent-lightMain dark:accent-darkMain">
+                    </label>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Nama Toko</label>
+                        <input type="text" name="new_offline_store[name]" placeholder="Nama Toko (opsional)" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-2 rounded focus:outline-none focus:border-lightMain dark:focus:border-darkMain">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Keterangan</label>
+                        <input type="text" name="new_offline_store[description]" placeholder="Keterangan singkat" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-2 rounded focus:outline-none focus:border-lightMain dark:focus:border-darkMain">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Alamat Lengkap</label>
+                        <input type="text" name="new_offline_store[address]" placeholder="Alamat offline store" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-2 rounded focus:outline-none focus:border-lightMain dark:focus:border-darkMain">
+                    </div>
+                </div>
+                <p class="text-[10px] text-lightMuted dark:text-darkMuted mt-3">* Isi form di atas dan klik Simpan untuk menambah toko offline baru.</p>
+            </div>
         </div>
     </div>
 

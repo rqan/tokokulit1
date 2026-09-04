@@ -50,6 +50,28 @@ class CmsController extends Controller
                 ]);
             }
         }
+
+        // Tambah Online Store Baru
+        $newOnline = $request->input('new_online_store');
+        if (!empty($newOnline['name'])) {
+            OnlineStore::create([
+                'name' => $newOnline['name'],
+                'description' => $newOnline['description'] ?? '',
+                'url' => $newOnline['url'] ?? '',
+                'is_active' => isset($newOnline['is_active']) ? true : false,
+            ]);
+        }
+
+        // Tambah Offline Store Baru
+        $newOffline = $request->input('new_offline_store');
+        if (!empty($newOffline['name'])) {
+            OfflineStore::create([
+                'name' => $newOffline['name'],
+                'description' => $newOffline['description'] ?? '',
+                'address' => $newOffline['address'] ?? '',
+                'is_active' => isset($newOffline['is_active']) ? true : false,
+            ]);
+        }
         
         return redirect('/admin/cms')->with('success', 'Pengaturan Stores berhasil diperbarui.');
     }
