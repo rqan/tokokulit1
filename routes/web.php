@@ -179,3 +179,8 @@ Route::middleware(['role:superadmin'])->prefix('admin')->group(function () {
     // Sales Analytics
     Route::get('sales', [SalesController::class, 'index']);
 });
+
+Route::get('/setup-db-darurat', function() {
+    \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true, '--seed' => true]);
+    return 'Database siap! Silakan kembali ke halaman utama.';
+});
