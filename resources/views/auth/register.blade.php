@@ -50,7 +50,7 @@
             </div>
 
             <div class="flex flex-col">
-                <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI') }}"></div>
+                <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
             </div>
 
             <button type="submit" class="mt-4 border-all-minimal border-lightMain dark:border-darkMain py-4 font-bold tracking-[0.2em] uppercase text-xs hover:bg-lightMain hover:text-lightBg dark:hover:bg-darkMain dark:hover:text-darkBg transition-colors">
