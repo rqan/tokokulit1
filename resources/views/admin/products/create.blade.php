@@ -92,10 +92,13 @@
         </div>
     </div>
 
-        <div class="mb-8 pt-6 border-t border-lightBorder dark:border-darkBorder">
-        <label class="block text-[10px] uppercase tracking-widest font-bold mb-3 text-lightMuted dark:text-darkMuted">Foto Produk (Minimal 2)</label>
-        <input type="file" name="images[]" multiple accept="image/*" class="w-full px-4 py-3 bg-lightBg dark:bg-darkBg border border-lightBorder dark:border-darkBorder rounded focus:outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors text-sm" id="imageInput">
-        <p class="text-xs text-red-500 mt-2 hidden" id="imageError">Minimal harus mengunggah 2 gambar!</p>
+    <div class="mb-8 pt-6 border-t border-lightBorder dark:border-darkBorder">
+        <label class="block text-[10px] uppercase tracking-widest font-bold mb-3 text-lightMuted dark:text-darkMuted">Foto Produk (Unggah minimal 1)</label>
+        <div class="space-y-3">
+            <input type="file" name="images[]" accept="image/*" class="w-full px-4 py-3 bg-lightBg dark:bg-darkBg border border-lightBorder dark:border-darkBorder rounded focus:outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors text-sm">
+            <input type="file" name="images[]" accept="image/*" class="w-full px-4 py-3 bg-lightBg dark:bg-darkBg border border-lightBorder dark:border-darkBorder rounded focus:outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors text-sm">
+            <input type="file" name="images[]" accept="image/*" class="w-full px-4 py-3 bg-lightBg dark:bg-darkBg border border-lightBorder dark:border-darkBorder rounded focus:outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors text-sm">
+        </div>
     </div>
     <div class="flex items-center justify-end gap-4 pt-6 border-t border-lightBorder dark:border-darkBorder">
         <a href="{{ url('/admin/products') }}" class="px-8 py-3 text-[10px] uppercase tracking-[0.2em] font-bold text-lightMuted hover:text-lightMain dark:text-darkMuted dark:hover:text-darkMain transition-colors">Batal</a>
@@ -106,11 +109,6 @@
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <script>
     function validateImages() {
-        const input = document.getElementById('imageInput');
-        if (input && input.files.length < 2) {
-            document.getElementById('imageError').classList.remove('hidden');
-            return false;
-        }
         return true;
     }
 </script>
