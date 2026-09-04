@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -34,8 +34,8 @@
         <form action="{{ url('/login') }}" method="post" class="flex flex-col gap-6">
             @csrf
             <div class="flex flex-col">
-                <label class="text-[10px] font-bold tracking-[0.2em] uppercase mb-2">Email</label>
-                <input type="email" name="email" required class="bg-transparent border-b-minimal border-lightBorder dark:border-darkBorder py-2 outline-none focus:border-lightMain dark:focus:border-darkMain text-sm transition-colors">
+                <label class="text-[10px] font-bold tracking-[0.2em] uppercase mb-2">Email / No HP</label>
+                <input type="text" name="login" required class="bg-transparent border-b-minimal border-lightBorder dark:border-darkBorder py-2 outline-none focus:border-lightMain dark:focus:border-darkMain text-sm transition-colors" value="{{ old('login') }}">
             </div>
             
             <div class="flex flex-col">

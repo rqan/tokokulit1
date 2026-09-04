@@ -16,15 +16,28 @@ class AuthController extends Controller
 
     public function register()
     {
-        return view('auth.register');
+        $num1 = rand(1, 10);
+        $num2 = rand(1, 10);
+        session(['captcha_answer' => $num1 + $num2]);
+        $captcha_question = "Berapa hasil dari $num1 + $num2 ?";
+
+        return view('auth.register', compact('captcha_question'));
     }
 
     public function attemptLogin(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
+        $request->validate([
+            'login' => 'required',
             'password' => 'required'
         ]);
+
+        $login = $request->input('login');
+        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+
+        $credentials = [
+            $fieldType => $login,
+            'password' => $request->password
+        ];
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
@@ -46,22 +59,36 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+            'login' => 'Email/No HP atau password salah.',
+        ])->onlyInput('login');
     }
 
     public function attemptRegister(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'username' => 'required|min:3|max:100',
-            'email' => 'required|email|unique:users',
+            'contact' => 'required',
             'password' => 'required|min:6',
+            'captcha' => 'required|numeric'
         ]);
 
+        if ((int)$request->captcha !== (int)session('captcha_answer')) {
+            return back()->withErrors(['captcha' => 'Jawaban perhitungan anti-bot salah.'])->withInput();
+        }
+
+        $isEmail = filter_var($request->contact, FILTER_VALIDATE_EMAIL);
+
+        if ($isEmail) {
+            $request->validate(['contact' => 'unique:users,email']);
+        } else {
+            $request->validate(['contact' => 'unique:users,phone']);
+        }
+
         $user = User::create([
-            'name' => $validated['username'],
-            'email' => $validated['email'],
-            'password' => $validated['password'], // User model auto-hashes via 'hashed' cast
+            'name' => $request->username,
+            'email' => $isEmail ? $request->contact : null,
+            'phone' => !$isEmail ? $request->contact : null,
+            'password' => $request->password, // User model auto-hashes via 'hashed' cast
             'role' => 'pelanggan'
         ]);
 

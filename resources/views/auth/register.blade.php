@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -39,13 +39,18 @@
             </div>
             
             <div class="flex flex-col">
-                <label class="text-[10px] font-bold tracking-[0.2em] uppercase mb-2">Email</label>
-                <input type="email" name="email" required class="bg-transparent border-b-minimal border-lightBorder dark:border-darkBorder py-2 outline-none focus:border-lightMain dark:focus:border-darkMain text-sm transition-colors" value="{{ old('email') }}">
+                <label class="text-[10px] font-bold tracking-[0.2em] uppercase mb-2">Email / No HP</label>
+                <input type="text" name="contact" required class="bg-transparent border-b-minimal border-lightBorder dark:border-darkBorder py-2 outline-none focus:border-lightMain dark:focus:border-darkMain text-sm transition-colors" value="{{ old('contact') }}">
             </div>
             
             <div class="flex flex-col">
                 <label class="text-[10px] font-bold tracking-[0.2em] uppercase mb-2">Password</label>
                 <input type="password" name="password" required class="bg-transparent border-b-minimal border-lightBorder dark:border-darkBorder py-2 outline-none focus:border-lightMain dark:focus:border-darkMain text-sm transition-colors">
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-[10px] font-bold tracking-[0.2em] uppercase mb-2">Anti-Bot: {{ $captcha_question }}</label>
+                <input type="number" name="captcha" required class="bg-transparent border-b-minimal border-lightBorder dark:border-darkBorder py-2 outline-none focus:border-lightMain dark:focus:border-darkMain text-sm transition-colors" placeholder="Masukkan angka jawaban">
             </div>
 
             <button type="submit" class="mt-4 border-all-minimal border-lightMain dark:border-darkMain py-4 font-bold tracking-[0.2em] uppercase text-xs hover:bg-lightMain hover:text-lightBg dark:hover:bg-darkMain dark:hover:text-darkBg transition-colors">
