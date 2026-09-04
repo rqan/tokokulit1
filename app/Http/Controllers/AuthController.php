@@ -16,12 +16,7 @@ class AuthController extends Controller
 
     public function register()
     {
-        $num1 = rand(1, 10);
-        $num2 = rand(1, 10);
-        session(['captcha_answer' => $num1 + $num2]);
-        $captcha_question = "Berapa hasil dari $num1 + $num2 ?";
-
-        return view('auth.register', compact('captcha_question'));
+        return view('auth.register');
     }
 
     public function attemptLogin(Request $request)
@@ -69,11 +64,19 @@ class AuthController extends Controller
             'username' => 'required|min:3|max:100',
             'contact' => 'required',
             'password' => 'required|min:6',
-            'captcha' => 'required|numeric'
+            'g-recaptcha-response' => 'required'
+        ], [
+            'g-recaptcha-response.required' => 'Silakan centang kotak reCAPTCHA untuk membuktikan Anda bukan robot.'
         ]);
 
-        if ((int)$request->captcha !== (int)session('captcha_answer')) {
-            return back()->withErrors(['captcha' => 'Jawaban perhitungan anti-bot salah.'])->withInput();
+        $response = \Illuminate\Support\Facades\Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => env('RECAPTCHA_SECRET_KEY', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'),
+            'response' => $request->input('g-recaptcha-response'),
+            'remoteip' => $request->ip()
+        ]);
+
+        if (!$response->json('success')) {
+            return back()->withErrors(['captcha' => 'Verifikasi reCAPTCHA gagal, silakan coba lagi.'])->withInput();
         }
 
         $isEmail = filter_var($request->contact, FILTER_VALIDATE_EMAIL);
