@@ -10,6 +10,36 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/ux.css') }}">
     <script src="{{ asset('js/ux.js') }}"></script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- SEO Schema JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+        @foreach($products as $index => $product)
+        {
+          "@type": "ListItem",
+          "position": {{ $index + 1 }},
+          "item": {
+            "@type": "Product",
+            "url": "{{ url('/product/' . $product['id']) }}",
+            "name": "{{ $product['name'] }}",
+            "image": "{{ $product['image_url'] ?? '' }}",
+            "offers": {
+              "@type": "Offer",
+              "price": "{{ $product['price'] }}",
+              "priceCurrency": "IDR"
+            }
+          }
+        }{{ !$loop->last ? ',' : '' }}
+        @endforeach
+      ]
+    }
+    </script>
 </head>
 <body class="w-full relative antialiased selection:bg-lightMain selection:text-lightBg dark:selection:bg-darkMain dark:selection:text-darkBg bg-lightBg text-lightMain dark:bg-darkBg dark:text-darkMain">
 
@@ -45,86 +75,100 @@
         </div>
     </header>
 
-    <div class="flex flex-col md:flex-row min-h-screen px-8 py-8 gap-12">
+    <div x-data="catalogApp({{ json_encode(request()->all()) }})" class="flex flex-col md:flex-row min-h-screen px-8 py-8 gap-12">
         <!-- Sidebar -->
-        <aside class="w-full md:w-48 flex-shrink-0 md:sticky md:top-28 h-max">
+        <aside class="w-full md:w-48 flex-shrink-0 md:sticky md:top-28 h-max" aria-label="Catalog Filters">
             <!-- Search -->
             <div class="mb-8 relative">
-                <form action="{{ url('/katalog') }}" method="GET">
-                    <input type="text" name="q" id="searchInput" value="{{ $q }}" placeholder="Search products..." class="w-full bg-transparent border-b border-lightBorder dark:border-darkBorder pb-2 text-[10px] uppercase tracking-widest focus:outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors">
-                    @if($selectedCategory) <input type="hidden" name="category" value="{{ $selectedCategory }}"> @endif
-                    @if($gender) <input type="hidden" name="gender" value="{{ $gender }}"> @endif
-                </form>
+                <input type="text" x-model="filters.q" @input.debounce.500ms="fetchProducts()" id="searchInput" placeholder="Search products..." class="w-full bg-transparent border-b border-lightBorder dark:border-darkBorder pb-2 text-[10px] uppercase tracking-widest focus:outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors">
             </div>
             
+            <!-- Sort By -->
+            <div class="mb-8">
+                <h3 class="text-[10px] tracking-[0.2em] uppercase font-bold mb-4 text-lightMuted dark:text-darkMuted">Sort By</h3>
+                <select x-model="filters.sort" @change="fetchProducts()" class="w-full bg-transparent border-b border-lightBorder dark:border-darkBorder pb-2 text-[10px] tracking-widest uppercase focus:outline-none cursor-pointer">
+                    <option class="bg-lightBg dark:bg-darkBg" value="newest">Latest Arrivals</option>
+                    <option class="bg-lightBg dark:bg-darkBg" value="price_asc">Price: Low to High</option>
+                    <option class="bg-lightBg dark:bg-darkBg" value="price_desc">Price: High to Low</option>
+                </select>
+            </div>
+
             <!-- Categories -->
             <div>
                 <h3 class="text-[10px] tracking-[0.2em] uppercase font-bold mb-4 text-lightMuted dark:text-darkMuted">Categories</h3>
                 <ul class="space-y-3 text-[10px] tracking-widest uppercase">
+                    <li>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:text-lightMain dark:hover:text-darkMain transition-colors">
+                            <input type="radio" value="" x-model="filters.category" @change="fetchProducts()" class="accent-lightMain dark:accent-darkMain">
+                            <span :class="filters.category === '' ? 'text-lightMain dark:text-darkMain border-b border-lightMain dark:border-darkMain pb-1' : ''">All Categories</span>
+                        </label>
+                    </li>
                     @foreach($categories as $cat)
                     <li>
-                        <a href="{{ url('/katalog?category='.$cat . ($q ? '&q='.$q : '') . ($gender ? '&gender='.$gender : '')) }}" class="{{ $selectedCategory == $cat ? 'text-lightMain dark:text-darkMain border-b border-lightMain dark:border-darkMain pb-1' : 'hover:text-lightMain dark:hover:text-darkMain' }}">
-                            {{ $cat }}
-                        </a>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:text-lightMain dark:hover:text-darkMain transition-colors">
+                            <input type="radio" value="{{ $cat }}" x-model="filters.category" @change="fetchProducts()" class="accent-lightMain dark:accent-darkMain">
+                            <span :class="filters.category === '{{ $cat }}' ? 'text-lightMain dark:text-darkMain border-b border-lightMain dark:border-darkMain pb-1' : ''">{{ $cat }}</span>
+                        </label>
                     </li>
                     @endforeach
-                    @if($selectedCategory)
-                    <li class="pt-2">
-                        <a href="{{ url('/katalog?' . ($q ? 'q='.$q : '') . ($gender ? '&gender='.$gender : '')) }}" class="text-red-500 hover:text-red-600 border-b border-transparent hover:border-red-600 pb-1 inline-block">Clear Category</a>
-                    </li>
-                    @endif
                 </ul>
             </div>
-            
         </aside>
 
         <!-- Main Product Grid -->
-        <main class="flex-1">
+        <main class="flex-1" aria-label="Product Listing">
             <div class="mb-6 flex justify-between items-center pb-4 border-b-minimal border-lightBorder dark:border-darkBorder">
                 <h1 class="display-font text-3xl">
-                    @if($q) Search results for "{{ $q }}"
-                    @elseif($selectedCategory) {{ $selectedCategory }}
-                    @elseif($gender) {{ $gender }}'s Collection
-                    @else All Products
-                    @endif
+                    Collection
                 </h1>
-                <span class="text-[10px] tracking-widest uppercase text-lightMuted dark:text-darkMuted">{{ count($products) }} Items Found</span>
+                <div class="flex items-center gap-4 text-[10px] tracking-widest uppercase text-lightMuted dark:text-darkMuted">
+                    <span x-show="isLoading" class="animate-pulse text-lightMain dark:text-darkMain">Loading...</span>
+                    <span x-text="`${totalItems} Items Found`"></span>
+                </div>
             </div>
 
-            @if(count($products) > 0)
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-                    @foreach ($products as $product)
-                        <a href="{{ url('/product/' . $product['id']) }}" class="group flex flex-col border border-transparent hover:border-lightBorder dark:hover:border-darkBorder transition-all pb-4">
-                            <!-- Image -->
-                            <div class="w-full aspect-[3/2] bg-[#E5E5E5] dark:bg-[#1E1E1E] overflow-hidden flex items-center justify-center transition-colors relative">
-                                @if(!empty($product['image_url']))
-                                    <img
-                                        src="{{ $product['image_url'] }}"
-                                        alt="{{ $product['name'] }}"
-                                        draggable="false"
-                                        class="object-cover w-full h-full grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 pointer-events-none"
-                                    >
-                                @else
-                                    <span class="display-font text-2xl text-lightBorder dark:text-darkBorder">NO IMAGE</span>
-                                @endif
-                            </div>
+            <!-- Empty State -->
+            <div x-show="products.length === 0" class="w-full text-center py-32 text-lightMuted dark:text-darkMuted display-font text-3xl" style="display: none;">
+                NO PRODUCTS FOUND.
+            </div>
 
-                            <!-- Info -->
-                            <div class="pt-4 flex flex-col justify-between px-4">
-                                <h3 class="display-font text-lg mb-1 text-lightMain dark:text-darkMain truncate">{{ $product['name'] }}</h3>
-                                <p class="text-[9px] tracking-widest uppercase text-lightMuted dark:text-darkMuted mb-2 truncate">{{ $product['category'] ?? $product['description'] }}</p>
-                                <div class="display-font text-md text-lightMain dark:text-darkMain font-semibold">
-                                    Rp{{ number_format($product['price'], 0, ',', '.') }}
-                                </div>
+            <!-- Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8" x-show="products.length > 0">
+                <template x-for="product in products" :key="product.id">
+                    <div class="group flex flex-col border border-transparent hover:border-lightBorder dark:hover:border-darkBorder transition-all pb-4 relative">
+                        <!-- Image -->
+                        <div class="w-full aspect-[3/2] bg-[#E5E5E5] dark:bg-[#1E1E1E] overflow-hidden flex items-center justify-center transition-colors relative">
+                            
+                            <img x-show="product.image_url"
+                                :src="product.image_url"
+                                :alt="product.name"
+                                draggable="false"
+                                loading="lazy"
+                                class="object-cover w-full h-full grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 pointer-events-none"
+                            >
+                            
+                            <span x-show="!product.image_url" class="display-font text-2xl text-lightBorder dark:text-darkBorder">NO IMAGE</span>
+                            
+                            <!-- Quick View Overlay -->
+                            <div class="absolute inset-0 bg-lightBg/50 dark:bg-darkBg/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm z-10 pointer-events-auto">
+                                <button @click="openQuickView(product)" class="bg-lightMain dark:bg-darkMain text-lightBg dark:text-darkBg px-6 py-3 text-[10px] uppercase tracking-widest font-bold hover:opacity-90 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                    Quick View
+                                </button>
                             </div>
+                        </div>
+
+                        <!-- Info -->
+                        <a :href="`/product/${product.id}`" class="pt-4 flex flex-col justify-between px-4 z-0">
+                            <h3 class="display-font text-lg mb-1 text-lightMain dark:text-darkMain truncate" x-text="product.name"></h3>
+                            <p class="text-[9px] tracking-widest uppercase text-lightMuted dark:text-darkMuted mb-2 truncate" x-text="product.category || product.description"></p>
+                            <div class="display-font text-md text-lightMain dark:text-darkMain font-semibold" x-text="formatRupiah(product.price)"></div>
                         </a>
-                    @endforeach
-                </div>
-            @else
-                <div class="w-full text-center py-32 text-lightMuted dark:text-darkMuted display-font text-3xl">
-                    NO PRODUCTS FOUND.
-                </div>
-            @endif
+                    </div>
+                </template>
+            </div>
+            
+            <!-- Pagination -->
+            <div x-html="paginationHtml" class="mt-12 flex justify-center w-full" @click="handlePaginationClick"></div>
         </main>
     </div>
 
@@ -137,6 +181,7 @@
         </div>
     </footer>
 
+    <!-- Theme & Global JS -->
     <script>
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
@@ -158,7 +203,6 @@
             });
         }
         
-        // Focus search input if focus_search is set
         @if(request('focus_search'))
             window.onload = function() {
                 const searchInput = document.getElementById('searchInput');
@@ -167,84 +211,81 @@
                 }
             }
         @endif
-    
-        // Live Search AJAX
-        const searchInput = document.getElementById('searchInput');
-        const searchForm = searchInput ? searchInput.closest('form') : null;
-        
-        if (searchInput && searchForm) {
-            let debounceTimer;
-            
-            const performSearch = () => {
-                const url = new URL(searchForm.action);
-                const formData = new FormData(searchForm);
-                
-                for (const [key, value] of formData.entries()) {
-                    if(value) url.searchParams.append(key, value);
-                }
-                
-                fetch(url)
-                    .then(res => res.text())
-                    .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        
-                        const currentMain = document.querySelector('main');
-                        const newMain = doc.querySelector('main');
-                        
-                        if(currentMain && newMain) {
-                            currentMain.innerHTML = newMain.innerHTML;
-                        }
-                        
-                        // Update URL without reloading to allow sharing links
-                        window.history.replaceState({}, '', url);
-                    });
-            };
-
-            searchInput.addEventListener('input', function() {
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(performSearch, 300);
-            });
-            
-                        searchForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                clearTimeout(debounceTimer);
-                performSearch();
-            });
-        }
-        
-        // Intercept Sidebar Links for AJAX
-        document.addEventListener('click', function(e) {
-            const link = e.target.closest('aside a');
-            if (link) {
-                e.preventDefault();
-                const url = link.href;
-                fetch(url)
-                    .then(res => res.text())
-                    .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        
-                        const currentMain = document.querySelector('main');
-                        const newMain = doc.querySelector('main');
-                        if(currentMain && newMain) {
-                            currentMain.innerHTML = newMain.innerHTML;
-                        }
-                        
-                        const currentAside = document.querySelector('aside');
-                        const newAside = doc.querySelector('aside');
-                        if(currentAside && newAside) {
-                            currentAside.innerHTML = newAside.innerHTML;
-                        }
-                        
-                        window.history.pushState({}, '', url);
-                    });
-            }
-        });
-
     </script>
 
-    <!-- Add to Cart Modal -->
+    <!-- Alpine App Logic -->
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('catalogApp', (initialFilters) => ({
+                products: @json($products->items()),
+                paginationHtml: `{!! addslashes($products->links('vendor.pagination.tailwind')) !!}`,
+                totalItems: {{ $products->total() }},
+                isLoading: false,
+                
+                filters: {
+                    q: initialFilters.q || '',
+                    category: initialFilters.category || '',
+                    sort: initialFilters.sort || 'newest',
+                    gender: initialFilters.gender || ''
+                },
+
+                async fetchProducts(url = null) {
+                    this.isLoading = true;
+                    
+                    const queryParams = new URLSearchParams();
+                    for (const key in this.filters) {
+                        if (this.filters[key]) {
+                            queryParams.append(key, this.filters[key]);
+                        }
+                    }
+                    
+                    const fetchUrl = url || `/katalog?${queryParams.toString()}`;
+
+                    try {
+                        const response = await fetch(fetchUrl, {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'application/json'
+                            }
+                        });
+                        
+                        const data = await response.json();
+                        
+                        this.products = data.products;
+                        this.paginationHtml = data.links;
+                        this.totalItems = data.total;
+
+                        window.history.pushState({}, '', fetchUrl);
+                    } catch (error) {
+                        console.error('Error fetching catalog data:', error);
+                    } finally {
+                        this.isLoading = false;
+                        if(url) window.scrollTo({top: 0, behavior: 'smooth'});
+                    }
+                },
+                
+                handlePaginationClick(e) {
+                    const link = e.target.closest('a');
+                    if(link) {
+                        e.preventDefault();
+                        this.fetchProducts(link.href);
+                    }
+                },
+
+                openQuickView(product) {
+                    if(typeof openCartModal === 'function') {
+                        openCartModal(product);
+                    }
+                },
+
+                formatRupiah(price) {
+                    return 'Rp' + new Intl.NumberFormat('id-ID').format(price);
+                }
+            }));
+        });
+    </script>
+
+    <!-- Add to Cart Modal (Vanilla JS logic kept as requested) -->
     <div id="cartModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-opacity opacity-0">
         <div class="bg-lightBg dark:bg-darkBg border border-lightBorder dark:border-darkBorder w-full max-w-md p-6 relative transform scale-95 transition-transform duration-300">
             <button onclick="closeCartModal()" class="absolute top-4 right-4 text-lightMuted dark:text-darkMuted hover:text-lightMain dark:hover:text-darkMain">
@@ -284,7 +325,7 @@
     </div>
 
     <!-- Toast Notification -->
-    <div id="toastNotif" class="fixed bottom-6 right-6 z-[110] bg-lightMain dark:bg-darkMain text-lightBg dark:text-darkBg px-6 py-4 translate-y-24 opacity-0 transition-all duration-300 flex items-center space-x-3 shadow-lg">
+    <div id="toastNotif" class="fixed bottom-6 right-6 z-[110] bg-lightMain dark:bg-darkMain text-lightBg dark:text-darkBg px-6 py-4 translate-y-24 opacity-0 transition-all duration-300 flex items-center space-x-3 shadow-lg pointer-events-none">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
         <span class="text-xs font-bold tracking-widest uppercase">Berhasil ditambahkan ke keranjang!</span>
     </div>
@@ -303,7 +344,6 @@
             document.getElementById('modalQuantity').max = product.stock || 100;
             document.getElementById('modalQuantity').value = 1;
 
-            // Handle Sizes
             if (product.sizes && product.sizes.length > 0) {
                 modalSizeContainer.classList.remove('hidden');
                 modalSizeContainer.classList.add('flex');
@@ -317,7 +357,6 @@
                 modalSize.innerHTML = '';
             }
 
-            // Handle Colors
             if (product.colors && product.colors.length > 0) {
                 modalColorContainer.classList.remove('hidden');
                 modalColorContainer.classList.add('flex');
@@ -361,7 +400,7 @@
             .then(res => res.json())
             .then(data => {
                 closeCartModal();
-                                if (data.cart_count !== undefined) {
+                if (data.cart_count !== undefined) {
                     const cartLinks = document.querySelectorAll('a[href*="/pelanggan/cart"]');
                     cartLinks.forEach(link => {
                         link.innerText = 'Cart (' + data.cart_count + ')';
@@ -371,7 +410,7 @@
             })
             .catch(err => {
                 console.error(err);
-                alert('Terjadi kesalahan.');
+                alert('Terjadi kesalahan saat menambah ke keranjang.');
             });
         }
 
@@ -385,29 +424,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
