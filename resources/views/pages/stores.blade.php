@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -74,7 +74,10 @@
                                     <h3 class="text-xl font-semibold mb-2">{{ $store->name }}</h3>
                                     <p class="text-lightMuted dark:text-darkMuted mb-2">{{ $store->description }}</p>
                                     <p class="text-sm">{{ $store->address }}</p>
-                                    <a href="https://maps.google.com/?q={{ urlencode($store->name . ' ' . $store->address) }}" target="_blank" class="mt-6 inline-block text-[10px] font-bold uppercase tracking-wider underline hover:text-lightMuted dark:hover:text-darkMuted">View on Maps</a>
+                                    @php
+                                        $mapUrl = $store->map_link ?: 'https://maps.google.com/?q=' . urlencode($store->name . ' ' . $store->address);
+                                    @endphp
+                                    <a href="{{ $mapUrl }}" target="_blank" class="mt-6 inline-block text-[10px] font-bold uppercase tracking-wider underline hover:text-lightMuted dark:hover:text-darkMuted">View on Maps</a>
                                 </div>
                             @endforeach
                         @else

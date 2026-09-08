@@ -29,9 +29,9 @@ class CmsController extends Controller
             $store = OnlineStore::find($id);
             if ($store) {
                 $store->update([
-                    'name' => $data['name'],
-                    'description' => $data['description'],
-                    'url' => $data['url'],
+                    'name' => $data['name'] ?? '',
+                    'description' => $data['description'] ?? '',
+                    'url' => $data['url'] ?? '',
                     'is_active' => isset($data['is_active']) ? true : false,
                 ]);
             }
@@ -43,9 +43,10 @@ class CmsController extends Controller
             $store = OfflineStore::find($id);
             if ($store) {
                 $store->update([
-                    'name' => $data['name'],
-                    'description' => $data['description'],
-                    'address' => $data['address'],
+                    'name' => $data['name'] ?? '',
+                    'description' => $data['description'] ?? '',
+                    'address' => $data['address'] ?? '',
+                    'map_link' => $data['map_link'] ?? '',
                     'is_active' => isset($data['is_active']) ? true : false,
                 ]);
             }
@@ -69,10 +70,25 @@ class CmsController extends Controller
                 'name' => $newOffline['name'],
                 'description' => $newOffline['description'] ?? '',
                 'address' => $newOffline['address'] ?? '',
+                'map_link' => $newOffline['map_link'] ?? '',
                 'is_active' => isset($newOffline['is_active']) ? true : false,
             ]);
         }
         
         return redirect('/admin/cms')->with('success', 'Pengaturan Stores berhasil diperbarui.');
+    }
+
+    public function destroy(Request $request)
+    {
+        $type = $request->input('type');
+        $id = $request->input('id');
+
+        if ($type === 'online') {
+            OnlineStore::destroy($id);
+        } elseif ($type === 'offline') {
+            OfflineStore::destroy($id);
+        }
+
+        return redirect('/admin/cms')->with('success', 'Toko berhasil dihapus.');
     }
 }

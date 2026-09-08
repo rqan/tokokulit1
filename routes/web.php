@@ -83,7 +83,7 @@ Route::middleware(['role:pelanggan'])->prefix('pelanggan')->group(function () {
 
     // Checkout
     Route::get('checkout', [CheckoutController::class, 'index']);
-    Route::post('checkout/process', [CheckoutController::class, 'process']);
+    Route::post('checkout/process', [CheckoutController::class, 'process'])->middleware('throttle:3,1');
 
     // Pesanan (Riwayat & Detail)
     Route::get('pesanan', [PesananController::class, 'riwayat']);
@@ -138,6 +138,32 @@ Route::middleware(['role:admin,superadmin'])->prefix('admin')->group(function ()
     Route::get('newsletter/create', [NewsletterController::class, 'create']);
     Route::post('newsletter/store', [NewsletterController::class, 'store']);
     Route::post('newsletter/send/{id}', [NewsletterController::class, 'send']);
+    
+    // Blacklist
+    Route::post('blacklist', [\App\Http\Controllers\Admin\BlacklistController::class, 'store'])->name('admin.blacklist.store');
+
+    // React API Endpoints (menggunakan session web)
+    Route::prefix('api')->group(function () {
+        Route::get('products', [App\Http\Controllers\Api\Admin\ProductController::class, 'index']);
+        Route::post('products', [App\Http\Controllers\Api\Admin\ProductController::class, 'store']);
+        Route::delete('products/{id}', [App\Http\Controllers\Api\Admin\ProductController::class, 'destroy']);
+        
+        Route::get('categories', [App\Http\Controllers\Api\Admin\CategoryController::class, 'index']);
+        
+        // Orders
+        Route::get('orders', [\App\Http\Controllers\Api\Admin\OrderController::class, 'index']);
+        Route::post('orders/{id}/status', [\App\Http\Controllers\Api\Admin\OrderController::class, 'updateStatus']);
+        
+        // Newsletter
+        Route::get('newsletter', [\App\Http\Controllers\Api\Admin\NewsletterController::class, 'index']);
+        Route::delete('newsletter/{id}', [\App\Http\Controllers\Api\Admin\NewsletterController::class, 'destroy']);
+        Route::get('newsletter/campaigns', [\App\Http\Controllers\Api\Admin\NewsletterController::class, 'campaigns']);
+        Route::post('newsletter/campaigns', [\App\Http\Controllers\Api\Admin\NewsletterController::class, 'storeCampaign']);
+        Route::post('newsletter/campaigns/{id}/blast', [\App\Http\Controllers\Api\Admin\NewsletterController::class, 'blast']);
+        
+        // Sales Analytics
+        Route::get('sales/stats', [\App\Http\Controllers\Api\Admin\SalesController::class, 'stats']);
+    });
 });
 
 // ==========================================
@@ -158,6 +184,7 @@ Route::middleware(['role:superadmin'])->prefix('admin')->group(function () {
     // CMS
     Route::get('cms', [CmsController::class, 'index']);
     Route::post('cms/update', [CmsController::class, 'update']);
+    Route::post('cms/delete-store', [CmsController::class, 'destroy']);
 });
 
 // Password Reset Routes

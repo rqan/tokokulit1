@@ -28,7 +28,7 @@ export default function ProductTable() {
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['admin-products', page, search],
     queryFn: async () => {
-      const res = await fetch(`/api/admin/products?page=${page}&search=${search}`);
+      const res = await fetch(`/admin/api/products?page=${page}&search=${search}`);
       if (!res.ok) throw new Error('Network response was not ok');
       return res.json();
     }
@@ -70,7 +70,7 @@ export default function ProductTable() {
             className="text-red-600 hover:underline"
             onClick={async () => {
                if (confirm('Yakin hapus produk ini?')) {
-                  const res = await fetch(`/api/admin/products/${props.row.original.id}`, {
+                  const res = await fetch(`/admin/api/products/${props.row.original.id}`, {
                      method: 'DELETE',
                      headers: { 'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content }
                   });

@@ -17,20 +17,20 @@
     <!-- SEO Schema JSON-LD -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
+      "@@context": "https://schema.org",
+      "@@type": "ItemList",
       "itemListElement": [
         @foreach($products as $index => $product)
         {
-          "@type": "ListItem",
+          "@@type": "ListItem",
           "position": {{ $index + 1 }},
           "item": {
-            "@type": "Product",
+            "@@type": "Product",
             "url": "{{ url('/product/' . $product['id']) }}",
             "name": "{{ $product['name'] }}",
             "image": "{{ $product['image_url'] ?? '' }}",
             "offers": {
-              "@type": "Offer",
+              "@@type": "Offer",
               "price": "{{ $product['price'] }}",
               "priceCurrency": "IDR"
             }
@@ -98,15 +98,15 @@
                 <h3 class="text-[10px] tracking-[0.2em] uppercase font-bold mb-4 text-lightMuted dark:text-darkMuted">Categories</h3>
                 <ul class="space-y-3 text-[10px] tracking-widest uppercase">
                     <li>
-                        <label class="flex items-center space-x-2 cursor-pointer hover:text-lightMain dark:hover:text-darkMain transition-colors">
-                            <input type="radio" value="" x-model="filters.category" @change="fetchProducts()" class="accent-lightMain dark:accent-darkMain">
+                        <label class="flex items-center cursor-pointer hover:text-lightMain dark:hover:text-darkMain transition-colors">
+                            <input type="radio" value="" x-model="filters.category" @change="fetchProducts()" class="hidden">
                             <span :class="filters.category === '' ? 'text-lightMain dark:text-darkMain border-b border-lightMain dark:border-darkMain pb-1' : ''">All Categories</span>
                         </label>
                     </li>
                     @foreach($categories as $cat)
                     <li>
-                        <label class="flex items-center space-x-2 cursor-pointer hover:text-lightMain dark:hover:text-darkMain transition-colors">
-                            <input type="radio" value="{{ $cat }}" x-model="filters.category" @change="fetchProducts()" class="accent-lightMain dark:accent-darkMain">
+                        <label class="flex items-center cursor-pointer hover:text-lightMain dark:hover:text-darkMain transition-colors">
+                            <input type="radio" value="{{ $cat }}" x-model="filters.category" @change="fetchProducts()" class="hidden">
                             <span :class="filters.category === '{{ $cat }}' ? 'text-lightMain dark:text-darkMain border-b border-lightMain dark:border-darkMain pb-1' : ''">{{ $cat }}</span>
                         </label>
                     </li>
@@ -301,14 +301,14 @@
                 <div id="modalSizeContainer" class="hidden flex-col space-y-2">
                     <label class="text-[10px] tracking-widest uppercase font-bold">Ukuran</label>
                     <select name="size" id="modalSize" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-3 text-sm focus:outline-none">
-                        <option value="">Pilih Ukuran</option>
+                        <option value="" class="bg-lightBg dark:bg-darkBg text-lightMain dark:text-darkMain">Pilih Ukuran</option>
                     </select>
                 </div>
 
                 <div id="modalColorContainer" class="hidden flex-col space-y-2">
                     <label class="text-[10px] tracking-widest uppercase font-bold">Warna</label>
                     <select name="color" id="modalColor" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-3 text-sm focus:outline-none">
-                        <option value="">Pilih Warna</option>
+                        <option value="" class="bg-lightBg dark:bg-darkBg text-lightMain dark:text-darkMain">Pilih Warna</option>
                     </select>
                 </div>
                 
@@ -347,9 +347,9 @@
             if (product.sizes && product.sizes.length > 0) {
                 modalSizeContainer.classList.remove('hidden');
                 modalSizeContainer.classList.add('flex');
-                modalSize.innerHTML = '<option value="">Pilih Ukuran (opsional)</option>';
+                modalSize.innerHTML = '<option value="" class="bg-lightBg dark:bg-darkBg text-lightMain dark:text-darkMain">Pilih Ukuran (opsional)</option>';
                 product.sizes.forEach(size => {
-                    modalSize.innerHTML += `<option value="${size}">${size}</option>`;
+                    modalSize.innerHTML += `<option value="${size}" class="bg-lightBg dark:bg-darkBg text-lightMain dark:text-darkMain">${size}</option>`;
                 });
             } else {
                 modalSizeContainer.classList.add('hidden');
@@ -360,9 +360,9 @@
             if (product.colors && product.colors.length > 0) {
                 modalColorContainer.classList.remove('hidden');
                 modalColorContainer.classList.add('flex');
-                modalColor.innerHTML = '<option value="">Pilih Warna (opsional)</option>';
+                modalColor.innerHTML = '<option value="" class="bg-lightBg dark:bg-darkBg text-lightMain dark:text-darkMain">Pilih Warna (opsional)</option>';
                 product.colors.forEach(color => {
-                    modalColor.innerHTML += `<option value="${color}">${color}</option>`;
+                    modalColor.innerHTML += `<option value="${color}" class="bg-lightBg dark:bg-darkBg text-lightMain dark:text-darkMain">${color}</option>`;
                 });
             } else {
                 modalColorContainer.classList.add('hidden');

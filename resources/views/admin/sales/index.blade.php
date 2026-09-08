@@ -1,8 +1,16 @@
-﻿@extends('admin.layout.main')
-@section('title', $title ?? '')
+@extends('admin.layout.main')
+@section('title', 'Sales Analytics')
 @section('content')
-<div class="p-8 border-minimal border-lightBorder bg-black/5 rounded text-sm text-center">
-    Modul Analytics telah berhasil ditranslasi ke infrastruktur Laravel.
-</div>
-@endsection
 
+<div class="mb-6">
+    <h2 class="display-font text-2xl">Sales Analytics</h2>
+    <p class="text-sm text-lightMuted dark:text-darkMuted">Ringkasan performa penjualan dan pesanan toko.</p>
+</div>
+
+<!-- React Mount Point -->
+<div id="react-sales-dashboard"></div>
+
+@viteReactRefresh
+@vite('resources/js/admin/app.tsx')
+
+@endsection

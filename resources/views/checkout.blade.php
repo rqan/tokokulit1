@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/ux.css') }}">
     <script src="{{ asset('js/ux.js') }}"></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body class="w-full relative antialiased selection:bg-lightMain selection:text-lightBg dark:selection:bg-darkMain dark:selection:text-darkBg bg-lightBg text-lightMain dark:bg-darkBg dark:text-darkMain">
 
@@ -121,6 +122,18 @@
                     @foreach($selectedKeys as $sk)
                     <input type="hidden" name="selected_items[]" value="{{ $sk }}">
                     @endforeach
+                    
+                    <!-- Honeypot Field (Bot Trap) -->
+                    <div style="opacity: 0; position: absolute; top: 0; left: -9999px; z-index: -1;" aria-hidden="true">
+                        <label for="fax_number">Fax Number</label>
+                        <input type="text" name="fax_number" id="fax_number" tabindex="-1" autocomplete="off">
+                    </div>
+
+                    <!-- Cloudflare Turnstile -->
+                    <div class="mb-6 flex justify-center">
+                        <div class="cf-turnstile" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"></div>
+                    </div>
+                    
                     <button type="submit" class="w-full py-4 bg-lightMain dark:bg-darkMain text-lightBg dark:text-darkBg text-center text-[10px] tracking-[0.2em] uppercase font-bold hover:opacity-90 transition-opacity">
                         Buat Pesanan
                     </button>

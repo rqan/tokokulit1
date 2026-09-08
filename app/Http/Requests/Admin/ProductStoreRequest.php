@@ -35,6 +35,10 @@ class ProductStoreRequest extends FormRequest
             'sizes.*' => ['string'],
             'colors' => ['nullable', 'array'],
             'colors.*' => ['string'],
+            'variants' => ['nullable', 'array'],
+            'variants.*.size' => ['nullable', 'string'],
+            'variants.*.color' => ['nullable', 'string'],
+            'variants.*.stock' => ['nullable', 'integer', 'min:0'],
         ];
     }
 }

@@ -59,6 +59,22 @@ class ProductController extends Controller
             'colors' => $data['colors'] ?? [],
         ]);
 
+        if (!empty($data['variants']) && is_array($data['variants'])) {
+            $totalStock = 0;
+            foreach ($data['variants'] as $variant) {
+                $product->variants()->create([
+                    'size' => $variant['size'] ?? null,
+                    'color' => $variant['color'] ?? null,
+                    'stock' => $variant['stock'] ?? 0,
+                ]);
+                $totalStock += (int)($variant['stock'] ?? 0);
+            }
+            // Update master stock based on variants
+            if ($totalStock > 0) {
+                $product->update(['stock' => $totalStock]);
+            }
+        }
+
         return response()->json(['message' => 'Produk berhasil ditambahkan', 'product' => $product], 201);
     }
 

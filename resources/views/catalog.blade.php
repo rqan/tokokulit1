@@ -202,7 +202,12 @@
                             <p class="text-sm italic mb-6">"{{ $rating->review ?? 'Tidak ada ulasan tertulis.' }}"</p>
                         </div>
                         <div class="flex justify-between items-center text-[10px] tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted border-t-minimal border-lightBorder dark:border-darkBorder pt-4 mt-4">
-                            <span>{{ substr(explode(' ', $rating->user->name)[0], 0, 1) . '***' . (strlen(explode(' ', $rating->user->name)[0]) > 2 ? substr(explode(' ', $rating->user->name)[0], -1) : '') }}</span>
+                            @php
+                                $userName = $rating->user?->name ?? 'Anonymous';
+                                $firstName = explode(' ', $userName)[0];
+                                $maskedName = substr($firstName, 0, 1) . '***' . (strlen($firstName) > 2 ? substr($firstName, -1) : '');
+                            @endphp
+                            <span>{{ $maskedName }}</span>
                             <span>{{ $rating->created_at->format('d M Y') }}</span>
                         </div>
                     </div>

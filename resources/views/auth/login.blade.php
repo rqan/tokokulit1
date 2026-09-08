@@ -38,9 +38,14 @@
                 <input type="text" name="login" required class="bg-transparent border-b-minimal border-lightBorder dark:border-darkBorder py-2 outline-none focus:border-lightMain dark:focus:border-darkMain text-sm transition-colors" value="{{ old('login') }}">
             </div>
             
-            <div class="flex flex-col">
+            <div class="flex flex-col relative">
                 <label class="text-[10px] font-bold tracking-[0.2em] uppercase mb-2">Password</label>
-                <input type="password" name="password" required class="bg-transparent border-b-minimal border-lightBorder dark:border-darkBorder py-2 outline-none focus:border-lightMain dark:focus:border-darkMain text-sm transition-colors">
+                <div class="relative w-full">
+                    <input type="password" name="password" id="password" required class="w-full bg-transparent border-b-minimal border-lightBorder dark:border-darkBorder py-2 outline-none focus:border-lightMain dark:focus:border-darkMain text-sm transition-colors pr-10">
+                    <button type="button" onclick="const p=document.getElementById('password'); p.type=p.type==='password'?'text':'password'; this.innerHTML=p.type==='password'?'👁️':'🙈';" class="absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 px-2 py-1 text-sm">
+                        👁️
+                    </button>
+                </div>
             </div>
 
             <button type="submit" class="mt-4 border-all-minimal border-lightMain dark:border-darkMain py-4 font-bold tracking-[0.2em] uppercase text-xs hover:bg-lightMain hover:text-lightBg dark:hover:bg-darkMain dark:hover:text-darkBg transition-colors">

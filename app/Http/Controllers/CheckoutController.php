@@ -48,19 +48,64 @@ class CheckoutController extends Controller
         return view('checkout', ['cart' => $checkoutCart, 'selectedKeys' => array_keys($checkoutCart)]);
     }
 
-    /**
-     * Memproses checkout dan membuat pesanan.
-     */
     public function process(Request $request)
     {
+        // 1. Honeypot check (Bot Trap)
+        if ($request->filled('fax_number')) {
+            // Drop silently if bot fills it
+            return redirect('/')->with('success', 'Pesanan sedang diproses.');
+        }
+
+        // 2. Cloudflare Turnstile Validation (If configured)
+        if (env('TURNSTILE_SECRET_KEY')) {
+            $turnstileResponse = \Illuminate\Support\Facades\Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+                'secret' => env('TURNSTILE_SECRET_KEY'),
+                'response' => $request->input('cf-turnstile-response'),
+                'remoteip' => $request->ip()
+            ]);
+
+            if (!$turnstileResponse->json('success')) {
+                return back()->withErrors(['captcha' => 'Verifikasi keamanan gagal. Silakan selesaikan CAPTCHA dan coba lagi.'])->withInput();
+            }
+        }
+
+        // 3. Stricter Validations
         $request->validate([
-            'shipping_name' => 'required|string|max:255',
+            'shipping_name' => 'required|string|min:3|max:255',
             'shipping_email' => 'required|email|max:255',
-            'shipping_phone' => 'required|string|max:20',
-            'shipping_address' => 'required|string',
+            'shipping_phone' => ['required', 'string', 'regex:/^(^\+62|62|0)8[1-9][0-9]{6,10}$/'],
+            'shipping_address' => 'required|string|min:10',
             'notes' => 'nullable|string',
             'selected_items' => 'required|array',
+        ], [
+            'shipping_phone.regex' => 'Format nomor WhatsApp tidak valid (Gunakan 08x atau +628x)'
         ]);
+
+        // 4. Blacklist Check
+        $isBlacklisted = \App\Models\Blacklist::where('ip_address', $request->ip())
+                                  ->orWhere('phone', $request->input('shipping_phone'))->exists();
+        if ($isBlacklisted) {
+            abort(403, 'Akses ditolak.');
+        }
+
+        // 5. Risk Flag Detection
+        $ip = $request->ip();
+        $isFirstTime = !\App\Models\Order::where('shipping_phone', $request->input('shipping_phone'))->exists();
+        
+        $frequentIp = \App\Models\Order::where('ip_address', $ip)
+                           ->where('created_at', '>=', now()->subMinutes(5))
+                           ->count() >= 2;
+
+        $riskFlag = false;
+        $riskReason = null;
+        
+        if ($isFirstTime) {
+            $riskFlag = true;
+            $riskReason = 'Nomor HP Baru';
+        } elseif ($frequentIp) {
+            $riskFlag = true;
+            $riskReason = 'Frekuensi IP Tinggi';
+        }
 
         $cart = session()->get('cart', []);
         $selectedKeys = $request->input('selected_items', []);
@@ -90,13 +135,25 @@ class CheckoutController extends Controller
 
         $order = $this->orderService->createOrder($shippingData, $checkoutCart);
 
+        // Update Metadata Security
+        $order->update([
+            'ip_address' => $ip,
+            'user_agent' => $request->userAgent(),
+            'is_high_risk' => $riskFlag,
+            'risk_reason' => $riskReason
+        ]);
+
         // Remove only checked out items from session cart
         foreach ($selectedKeys as $key) {
             unset($cart[$key]);
         }
         session()->put('cart', $cart);
 
-        return redirect('/pelanggan/pesanan/' . $order->id)
-            ->with('success', 'Pesanan berhasil dibuat. Silakan tunggu konfirmasi admin.');
+        // Flow A: Direct WhatsApp
+        $waMessage = "Halo Admin, saya ingin konfirmasi pesanan:\n\nNama: {$order->shipping_name}\nNo WA: {$order->shipping_phone}\nOrder ID: {$order->id}\n\nMohon diproses.";
+        $adminPhone = '6281234567890'; // Sesuaikan dengan nomor admin
+        $waUrl = "https://wa.me/{$adminPhone}?text=" . urlencode($waMessage);
+
+        return redirect()->away($waUrl);
     }
 }
