@@ -26,7 +26,7 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        $login = $request->input('login');
+        $login = trim($request->input('login'));
         $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
 
         $credentials = [
