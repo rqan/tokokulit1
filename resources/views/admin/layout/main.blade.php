@@ -22,36 +22,36 @@
         .dataTable-wrapper { font-family: inherit; }
         .dataTable-top, .dataTable-bottom { padding: 1rem 0; }
         .dataTable-input { 
-            background-color: transparent; 
-            border: 1px solid #4a5568; 
-            color: inherit; 
+            background-color: transparent !important; 
+            border: 1px solid #4a5568 !important; 
+            color: inherit !important; 
             padding: 0.5rem; 
             border-radius: 0.25rem;
             outline: none;
         }
-        .dataTable-input:focus { border-color: #fca311; }
+        .dataTable-input:focus { border-color: #fca311 !important; }
         .dataTable-selector {
-            background-color: transparent;
-            border: 1px solid #4a5568;
-            color: inherit;
+            background-color: transparent !important;
+            border: 1px solid #4a5568 !important;
+            color: inherit !important;
             padding: 0.5rem;
             border-radius: 0.25rem;
         }
-        .dark .dataTable-selector option { background-color: #1a202c; color: #fff; }
-        .dataTable-table > thead > tr > th { border-bottom: 1px solid #4a5568; }
-        .dataTable-table > tbody > tr > td { border-bottom: 1px solid #4a5568; }
+        .dark .dataTable-selector option { background-color: #1a202c !important; color: #fff !important; }
+        .dataTable-table > thead > tr > th { border-bottom: 1px solid #4a5568 !important; }
+        .dataTable-table > tbody > tr > td { border-bottom: 1px solid #4a5568 !important; }
         .dataTable-pagination a {
-            color: inherit;
-            border: 1px solid transparent;
+            color: inherit !important;
+            border: 1px solid transparent !important;
             border-radius: 0.25rem;
         }
         .dataTable-pagination a:hover {
-            background-color: #fca311;
-            color: #1a202c;
+            background-color: #fca311 !important;
+            color: #1a202c !important;
         }
         .dataTable-pagination .active a {
-            background-color: #fca311;
-            color: #1a202c;
+            background-color: #fca311 !important;
+            color: #1a202c !important;
         }
     </style>
 </head>
