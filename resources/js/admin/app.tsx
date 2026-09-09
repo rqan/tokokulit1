@@ -6,7 +6,6 @@ import ProductForm from './components/ProductForm';
 import NewsletterTable from './components/NewsletterTable';
 import SalesDashboard from './components/SalesDashboard';
 import OrderTable from './components/OrderTable';
-import AdminRevamp from './components/AdminRevamp';
 import { Toaster } from 'sonner';
 
 const queryClient = new QueryClient();
@@ -32,5 +31,4 @@ document.addEventListener('DOMContentLoaded', () => {
   mountComponent('react-newsletter-table', NewsletterTable);
   mountComponent('react-sales-dashboard', SalesDashboard);
   mountComponent('react-order-table', OrderTable);
-  mountComponent('react-admin-revamp', AdminRevamp);
 });
