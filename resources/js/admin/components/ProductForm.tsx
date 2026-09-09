@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
 
 const variantSchema = z.object({
@@ -41,7 +40,7 @@ type ProductFormValues = z.infer<typeof productSchema>;
 export default function ProductForm() {
   const [categories, setCategories] = useState<{id: number, name: string}[]>([]);
   const [isNewCategory, setIsNewCategory] = useState(false);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [previews, setPreviews] = useState<(string | null)[]>([null]);
 
   const { register, control, handleSubmit, formState: { errors, isSubmitting }, setValue, watch } = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
@@ -53,15 +52,16 @@ export default function ProductForm() {
     name: "variants"
   });
 
-  const variantsWatch = watch('variants');
-  const hasVariants = variantsWatch && variantsWatch.length > 0;
+  const variantsWatch = watch('variants') || [];
+  const hasVariants = variantsWatch.length > 0;
+  const serializedStocks = JSON.stringify(variantsWatch.map(v => v?.stock || 0));
   
   useEffect(() => {
     if (hasVariants) {
-      const total = variantsWatch.reduce((sum, v) => sum + (Number(v.stock) || 0), 0);
+      const total = variantsWatch.reduce((sum, v) => sum + (Number(v?.stock) || 0), 0);
       setValue('stock', total, { shouldValidate: true });
     }
-  }, [variantsWatch, hasVariants, setValue]);
+  }, [serializedStocks, hasVariants, setValue]);
 
   useEffect(() => {
     fetch('/admin/api/categories')
@@ -70,16 +70,35 @@ export default function ProductForm() {
       .catch(err => console.error("Failed to load categories"));
   }, []);
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    if (acceptedFiles.length > 0) {
-      const file = acceptedFiles[0];
-      const previewUrl = URL.createObjectURL(file);
-      setPreview(previewUrl);
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      const newPreviews = [...previews];
+      newPreviews[idx] = URL.createObjectURL(file);
+      
+      // If it's the last slot and we haven't reached 5 slots, add a new empty slot
+      if (idx === previews.length - 1 && previews.length < 5) {
+        newPreviews.push(null);
+      }
+      setPreviews(newPreviews);
       toast.success('Gambar berhasil ditambahkan.');
     }
-  }, []);
+  };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: { 'image/*': [] }, multiple: false });
+  const removeImage = (idx: number) => {
+    const newPreviews = [...previews];
+    newPreviews.splice(idx, 1);
+    
+    // Ensure there's always at least one empty slot if less than 5
+    if (newPreviews.length < 5 && newPreviews[newPreviews.length - 1] !== null) {
+      newPreviews.push(null);
+    }
+    // If we deleted the only item, keep one empty slot
+    if (newPreviews.length === 0) {
+      newPreviews.push(null);
+    }
+    setPreviews(newPreviews);
+  };
 
   const onSubmit = async (data: ProductFormValues) => {
     try {
@@ -128,7 +147,7 @@ export default function ProductForm() {
             readOnly={hasVariants}
             className={`mt-1 block w-full border border-lightBorder dark:border-darkBorder rounded p-2 outline-none transition-colors ${hasVariants ? 'bg-black/5 dark:bg-white/5 cursor-not-allowed text-lightMuted dark:text-darkMuted' : 'bg-transparent focus:border-lightMain dark:focus:border-darkMain'}`} 
           />
-          <p className="text-[10px] text-lightMuted dark:text-darkMuted mt-1">*Jika Anda menambahkan varian (ukuran/warna), stok ini akan otomatis terupdate dari jumlah stok varian.</p>
+          <p className="text-[10px] text-lightMuted dark:text-darkMuted mt-1">*Jika Anda menambahkan varian (ukuran/warna), stok ini otomatis terisi.</p>
           {errors.stock && <p className="text-red-500 text-xs mt-1">{errors.stock.message}</p>}
         </div>
 
@@ -156,6 +175,15 @@ export default function ProductForm() {
             </button>
           </div>
           {errors.new_category && <p className="text-red-500 text-xs mt-1">{errors.new_category.message}</p>}
+        </div>
+
+        <div>
+          <label className="block text-xs font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted mb-2">Gender</label>
+          <select {...register('gender')} className="block w-full bg-transparent border border-lightBorder dark:border-darkBorder rounded p-2 outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors">
+            <option value="Unisex" className="bg-lightBg dark:bg-darkBg">Unisex</option>
+            <option value="Pria" className="bg-lightBg dark:bg-darkBg">Pria</option>
+            <option value="Wanita" className="bg-lightBg dark:bg-darkBg">Wanita</option>
+          </select>
         </div>
       </div>
 
@@ -202,17 +230,24 @@ export default function ProductForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted mb-3">Upload Gambar (Drag & Drop)</label>
-        <div {...getRootProps()} className={`border-2 border-dashed p-10 text-center rounded-lg cursor-pointer transition-colors ${isDragActive ? 'border-lightMain dark:border-darkMain bg-black/5 dark:bg-white/5' : 'border-lightBorder dark:border-darkBorder'}`}>
-          <input {...getInputProps()} />
-          {preview ? (
-             <div className="flex flex-col items-center justify-center">
-               <img src={preview} alt="Preview" className="h-40 object-contain rounded mb-4 shadow-sm" />
-               <p className="text-xs font-semibold tracking-widest uppercase text-lightMuted dark:text-darkMuted">Klik atau tarik gambar lain untuk mengganti</p>
-             </div>
-          ) : (
-             <p className="text-xs font-semibold tracking-widest uppercase text-lightMuted dark:text-darkMuted">Tarik gambar ke sini, atau klik untuk memilih file</p>
-          )}
+        <label className="block text-xs font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted mb-3">Upload Gambar (Maks 5)</label>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          {previews.map((previewImg, idx) => (
+            <div key={idx} className="relative border border-lightBorder dark:border-darkBorder rounded-lg overflow-hidden aspect-square flex items-center justify-center bg-black/5 dark:bg-white/5">
+              {previewImg ? (
+                <>
+                  <img src={previewImg} alt={`Preview ${idx}`} className="w-full h-full object-cover" />
+                  <button type="button" onClick={() => removeImage(idx)} className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shadow-md hover:bg-red-600">×</button>
+                </>
+              ) : (
+                <label className="cursor-pointer w-full h-full flex flex-col items-center justify-center text-lightMuted dark:text-darkMuted hover:text-lightMain dark:hover:text-darkMain transition-colors">
+                  <span className="text-2xl mb-1">+</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest">Pilih</span>
+                  <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, idx)} />
+                </label>
+              )}
+            </div>
+          ))}
         </div>
       </div>
 

@@ -25,10 +25,12 @@
         .dark .dataTable-wrapper input,
         .dark .dataTable-wrapper select,
         .dataTable-input, 
-        .dataTable-selector { 
-            background-color: transparent !important; 
+        .dataTable-selector,
+        .datatable-input,
+        .datatable-selector { 
+            background-color: #1a202c !important; 
             border: 1px solid #4a5568 !important; 
-            color: inherit !important; 
+            color: #e2e8f0 !important; 
             padding: 0.5rem; 
             border-radius: 0.25rem;
             outline: none;
@@ -36,12 +38,17 @@
         
         .dark .dataTable-wrapper input:focus,
         .dark .dataTable-wrapper select:focus,
-        .dataTable-input:focus { border-color: #fca311 !important; }
+        .dataTable-input:focus,
+        .datatable-input:focus,
+        .datatable-selector:focus { border-color: #fca311 !important; }
         
-        .dark .dataTable-wrapper select option { background-color: #1a202c !important; color: #fff !important; }
+        .dark .dataTable-wrapper select option,
+        .datatable-selector option { background-color: #1a202c !important; color: #e2e8f0 !important; }
         
-        .dataTable-table > thead > tr > th { border-bottom: 1px solid #4a5568 !important; }
-        .dataTable-table > tbody > tr > td { border-bottom: 1px solid #4a5568 !important; border-top: none !important; }
+        .dataTable-table > thead > tr > th,
+        .datatable-table > thead > tr > th { border-bottom: 1px solid #4a5568 !important; }
+        .dataTable-table > tbody > tr > td,
+        .datatable-table > tbody > tr > td { border-bottom: 1px solid #4a5568 !important; border-top: none !important; }
         
         .dataTable-pagination a {
             color: inherit !important;

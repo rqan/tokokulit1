@@ -54,7 +54,7 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::with('variants', 'category')->findOrFail($id);
         return view('admin.products.edit', ['title' => 'EDIT PRODUCT', 'product' => $product]);
     }
 
@@ -74,10 +74,35 @@ class ProductController extends Controller
             'stock' => $request->input('stock', $product->stock),
             'sizes' => $sizes,
             'colors' => $colors,
+            'availability_status' => $request->input('availability_status', $product->availability_status),
+            'provenance' => $request->input('provenance', $product->provenance),
         ]);
+
+        // Handle Dynamic Variants
+        if ($request->has('variants')) {
+            $product->variants()->delete(); // clear old ones
+            $totalStock = 0;
+            foreach ($request->input('variants') as $variant) {
+                if (!empty($variant['size']) || !empty($variant['color']) || !empty($variant['stock'])) {
+                    $product->variants()->create([
+                        'size' => $variant['size'] ?? null,
+                        'color' => $variant['color'] ?? null,
+                        'stock' => $variant['stock'] ?? 0,
+                    ]);
+                    $totalStock += (int)($variant['stock'] ?? 0);
+                }
+            }
+            if (count($request->input('variants')) > 0) {
+                $product->update(['stock' => $totalStock]);
+            }
+        }
 
         if ($request->filled('image_url')) {
             $product->update(['image_url' => $request->input('image_url')]);
+        }
+        // Handle images if uploaded via file input
+        if ($request->hasFile('images')) {
+            // minimal implementation for file upload if needed, keeping it as is since it wasn't implemented before
         }
 
         return redirect('/admin/products')->with('success', 'Produk berhasil diubah.');
