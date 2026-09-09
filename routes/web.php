@@ -112,7 +112,7 @@ Route::middleware(['role:admin,superadmin'])->prefix('admin')->group(function ()
     Route::get('/', [DashboardController::class, 'index']);
     Route::get('dashboard', [DashboardController::class, 'index']);
     
-    // Orders Management
+    // Manajemen Order
     Route::get('orders', [OrderController::class, 'index']);
     Route::get('orders/{id}', [OrderController::class, 'show']);
     Route::post('orders/{id}/shipping', [OrderController::class, 'updateShipping']);
@@ -124,7 +124,7 @@ Route::middleware(['role:admin,superadmin'])->prefix('admin')->group(function ()
     Route::post('orders/{id}/cancel', [OrderController::class, 'cancel']);
     Route::post('orders/{id}/send-rating', [OrderController::class, 'sendRatingLink']);
 
-    // Products
+    // Produk
     Route::get('products', [ProductController::class, 'index']);
     Route::get('products/create', [ProductController::class, 'create']);
     Route::post('products/store', [ProductController::class, 'store']);
@@ -132,18 +132,18 @@ Route::middleware(['role:admin,superadmin'])->prefix('admin')->group(function ()
     Route::post('products/update/{id}', [ProductController::class, 'update']);
     Route::get('products/delete/{id}', [ProductController::class, 'delete']);
 
-    // Reviews
+    // Penilaian Produk (Reviews)
     Route::get('reviews', [ReviewController::class, 'index']);
     Route::post('reviews/reply/{id}', [ReviewController::class, 'reply']);
     Route::get('reviews/delete/{id}', [ReviewController::class, 'delete']);
 
-    // Newsletter
+    // Berita
     Route::get('newsletter', [NewsletterController::class, 'index']);
     Route::get('newsletter/create', [NewsletterController::class, 'create']);
     Route::post('newsletter/store', [NewsletterController::class, 'store']);
     Route::post('newsletter/send/{id}', [NewsletterController::class, 'send']);
     
-    // Blacklist
+    // Daftar Hitam (Blacklist)
     Route::post('blacklist', [\App\Http\Controllers\Admin\BlacklistController::class, 'store'])->name('admin.blacklist.store');
 
     // React API Endpoints (menggunakan session web)
@@ -165,7 +165,7 @@ Route::middleware(['role:admin,superadmin'])->prefix('admin')->group(function ()
         Route::post('newsletter/campaigns', [\App\Http\Controllers\Api\Admin\NewsletterController::class, 'storeCampaign']);
         Route::post('newsletter/campaigns/{id}/blast', [\App\Http\Controllers\Api\Admin\NewsletterController::class, 'blast']);
         
-        // Sales Analytics
+        // Analisi Penilaian & Statistik Penjualan
         Route::get('sales/stats', [\App\Http\Controllers\Api\Admin\SalesController::class, 'stats']);
     });
 });

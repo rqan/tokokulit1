@@ -15,7 +15,7 @@ class CmsController extends Controller
         $offlineStores = OfflineStore::all();
         
         return view('admin.cms.index', [
-            'title' => 'CONTENT MANAGEMENT', 
+            'title' => 'Manajemen Toko', 
             'onlineStores' => $onlineStores,
             'offlineStores' => $offlineStores
         ]);

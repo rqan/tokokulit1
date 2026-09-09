@@ -1,6 +1,6 @@
 @extends('admin.layout.main')
 
-@section('title', 'METODE PEMBAYARAN')
+@section('title', 'Metode Pembayaran')
 
 @section('content')
 <div class="mb-8">

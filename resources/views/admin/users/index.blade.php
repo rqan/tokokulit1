@@ -4,7 +4,7 @@
 
 <div class="mb-6 flex justify-between items-center">
     <div>
-        <h2 class="display-font text-2xl">User Management</h2>
+        <h2 class="display-font text-2xl">Manajemen Pengguna</h2>
     </div>
 </div>
 
@@ -23,15 +23,15 @@
             @forelse ($users as $user)
                 <tr class="border-b-minimal border-lightBorder dark:border-darkBorder hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
                     <td class="py-4 px-4 text-sm">{{ $user->id ?? '' }}</td>
-                    <td class="py-4 px-4 text-sm font-semibold">{{ $user->username ?? '' }}</td>
+                    <td class="py-4 px-4 text-sm font-semibold">{{ $user->name ?? '' }}</td>
                     <td class="py-4 px-4 text-sm">{{ $user->email ?? '' }}</td>
                     <td class="py-4 px-4 text-sm">
                         <form action="{{ url('/admin/users/change-role/' . ($user->id ?? '')) }}" method="post" class="inline">
                             @csrf
-                            <select name="role" class="bg-transparent border-minimal border-lightBorder text-xs p-1 rounded" onchange="this.form.submit()">
-                                <option value="pelanggan" {{ ($user->role ?? '') == 'pelanggan' ? 'selected' : '' }}>Pelanggan</option>
-                                <option value="admin" {{ ($user->role ?? '') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="superadmin" {{ ($user->role ?? '') == 'superadmin' ? 'selected' : '' }}>Superadmin</option>
+                            <select name="role" class="bg-transparent dark:bg-darkBg border-minimal border-lightBorder text-xs p-1 rounded focus:outline-none" onchange="this.form.submit()">
+                                <option value="pelanggan" class="bg-lightBg dark:bg-darkBg text-lightMain dark:text-darkMain" {{ ($user->role ?? '') == 'pelanggan' ? 'selected' : '' }}>Pelanggan</option>
+                                <option value="admin" class="bg-lightBg dark:bg-darkBg text-lightMain dark:text-darkMain" {{ ($user->role ?? '') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                <option value="superadmin" class="bg-lightBg dark:bg-darkBg text-lightMain dark:text-darkMain" {{ ($user->role ?? '') == 'superadmin' ? 'selected' : '' }}>Superadmin</option>
                             </select>
                         </form>
                     </td>

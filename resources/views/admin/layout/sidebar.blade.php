@@ -13,38 +13,38 @@
         </a>
         
         <a href="{{ url('/admin/orders') }}" class="px-4 py-2 text-sm uppercase tracking-widest font-semibold hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors {{ Request::is('admin/orders*') ? 'text-blue-500' : '' }}">
-            Orders
+            Pesanan
         </a>
         
         @if ($role === 'superadmin')
         <a href="{{ url('/admin/users') }}" class="px-4 py-2 text-sm uppercase tracking-widest font-semibold hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors {{ Request::is('admin/users') ? 'text-blue-500' : '' }}">
-            User Management
+            Manajemen Pengguna
         </a>
         @endif
         
         <a href="{{ url('/admin/products') }}" class="px-4 py-2 text-sm uppercase tracking-widest font-semibold hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors {{ Request::is('admin/products') ? 'text-blue-500' : '' }}">
-            Products
+            Produk
         </a>
         
         <a href="{{ url('/admin/reviews') }}" class="px-4 py-2 text-sm uppercase tracking-widest font-semibold hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors {{ Request::is('admin/reviews') ? 'text-blue-500' : '' }}">
-            Reviews
+            Penilaian
         </a>
         
         <a href="{{ url('/admin/newsletter') }}" class="px-4 py-2 text-sm uppercase tracking-widest font-semibold hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors {{ Request::is('admin/newsletter') ? 'text-blue-500' : '' }}">
-            Newsletter
+            Berita
         </a>
 
         @if ($role === 'superadmin')
         <a href="{{ url('/admin/payment-methods') }}" class="px-4 py-2 text-sm uppercase tracking-widest font-semibold hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors {{ Request::is('admin/payment-methods*') ? 'text-blue-500' : '' }}">
-            Payment Methods
+            Metode Pembayaran
         </a>
         
         <a href="{{ url('/admin/sales') }}" class="px-4 py-2 text-sm uppercase tracking-widest font-semibold hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors {{ Request::is('admin/sales') ? 'text-blue-500' : '' }}">
-            Sales Analytics
+            Analisis Penjualan
         </a>
         
         <a href="{{ url('/admin/cms') }}" class="px-4 py-2 text-sm uppercase tracking-widest font-semibold hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors {{ Request::is('admin/cms') ? 'text-blue-500' : '' }}">
-            CMS
+            Manajemen Toko
         </a>
         @endif
     </nav>

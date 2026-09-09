@@ -11,7 +11,7 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $users = DB::table('users')->get();
+            $users = \App\Models\User::all();
         } catch (\Exception $e) {
             $users = collect([]);
         }

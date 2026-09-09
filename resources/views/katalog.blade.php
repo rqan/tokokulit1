@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog - TOKO RAFI</title>
-    
+    <title>Katalog - TOKO RAFA</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{{ asset('js/tailwind-config.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -149,10 +149,10 @@
                             
                             <span x-show="!product.image_url" class="display-font text-2xl text-lightBorder dark:text-darkBorder">NO IMAGE</span>
                             
-                            <!-- Quick View Overlay -->
+                            <!-- Add Too Cart View Overlay -->
                             <div class="absolute inset-0 bg-lightBg/50 dark:bg-darkBg/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm z-10 pointer-events-auto">
                                 <button @click="openQuickView(product)" class="bg-lightMain dark:bg-darkMain text-lightBg dark:text-darkBg px-6 py-3 text-[10px] uppercase tracking-widest font-bold hover:opacity-90 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                                    Quick View
+                                    Add To Cart
                                 </button>
                             </div>
                         </div>
@@ -301,14 +301,14 @@
                 <div id="modalSizeContainer" class="hidden flex-col space-y-2">
                     <label class="text-[10px] tracking-widest uppercase font-bold">Ukuran</label>
                     <select name="size" id="modalSize" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-3 text-sm focus:outline-none">
-                        <option value="" class="bg-lightBg dark:bg-darkBg text-lightMain dark:text-darkMain">Pilih Ukuran</option>
+                        <option value="">Pilih Ukuran</option>
                     </select>
                 </div>
 
                 <div id="modalColorContainer" class="hidden flex-col space-y-2">
                     <label class="text-[10px] tracking-widest uppercase font-bold">Warna</label>
                     <select name="color" id="modalColor" class="w-full bg-transparent border border-lightBorder dark:border-darkBorder p-3 text-sm focus:outline-none">
-                        <option value="" class="bg-lightBg dark:bg-darkBg text-lightMain dark:text-darkMain">Pilih Warna</option>
+                        <option value="">Pilih Warna</option>
                     </select>
                 </div>
                 

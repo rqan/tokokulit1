@@ -4,7 +4,7 @@
 
 <div class="mb-6">
     <h2 class="display-font text-2xl">Daftar Produk</h2>
-    <p class="text-sm text-lightMuted dark:text-darkMuted">Manajemen katalog produk berbasis React (TanStack Table).</p>
+    <p class="text-sm text-lightMuted dark:text-darkMuted">Manajemen produk pada katalog.</p>
 </div>
 
 <!-- React Mount Point -->
