@@ -150,45 +150,45 @@ export default function OrderTable() {
   });
 
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] space-y-4">
+    <div className="bg-lightBg dark:bg-darkBg p-6 rounded-xl border border-lightBorder dark:border-darkBorder shadow-sm space-y-4 text-lightMain dark:text-darkMain">
       {/* Filters */}
       <div className="flex flex-col md:flex-row justify-between gap-4">
         <input 
           type="text" 
           placeholder="Cari ID Pesanan, Nama, Email..." 
-          className="border rounded-md px-3 py-2 w-full md:w-80 outline-none focus:border-indigo-500"
+          className="border border-lightBorder dark:border-darkBorder bg-transparent rounded-md px-3 py-2 w-full md:w-80 outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
         
         <select 
-          className="border rounded-md px-3 py-2 outline-none focus:border-indigo-500 bg-white"
+          className="border border-lightBorder dark:border-darkBorder bg-transparent rounded-md px-3 py-2 outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
         >
-          <option value="all">Semua Status</option>
-          <option value="pending_confirmation">Menunggu Konfirmasi</option>
-          <option value="awaiting_payment">Menunggu Pembayaran</option>
-          <option value="payment_uploaded">Pembayaran Terupload</option>
-          <option value="processing">Diproses</option>
-          <option value="shipped">Dikirim</option>
-          <option value="completed">Selesai</option>
-          <option value="cancelled">Dibatalkan</option>
+          <option value="all" className="bg-lightBg dark:bg-darkBg">Semua Status</option>
+          <option value="pending_confirmation" className="bg-lightBg dark:bg-darkBg">Menunggu Konfirmasi</option>
+          <option value="awaiting_payment" className="bg-lightBg dark:bg-darkBg">Menunggu Pembayaran</option>
+          <option value="payment_uploaded" className="bg-lightBg dark:bg-darkBg">Pembayaran Terupload</option>
+          <option value="processing" className="bg-lightBg dark:bg-darkBg">Diproses</option>
+          <option value="shipped" className="bg-lightBg dark:bg-darkBg">Dikirim</option>
+          <option value="completed" className="bg-lightBg dark:bg-darkBg">Selesai</option>
+          <option value="cancelled" className="bg-lightBg dark:bg-darkBg">Dibatalkan</option>
         </select>
       </div>
 
       {isLoading ? (
         <div className="animate-pulse flex flex-col space-y-4 pt-4">
-           {[...Array(6)].map((_, i) => <div key={i} className="h-12 bg-gray-100 rounded-md"></div>)}
+           {[...Array(6)].map((_, i) => <div key={i} className="h-12 bg-gray-200 dark:bg-gray-800 rounded-md"></div>)}
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-gray-100">
+        <div className="overflow-x-auto rounded-lg border border-lightBorder dark:border-darkBorder">
           <table className="w-full text-left border-collapse">
             <thead>
               {table.getHeaderGroups().map(headerGroup => (
-                <tr key={headerGroup.id} className="bg-gray-50/50 border-b border-gray-100">
+                <tr key={headerGroup.id} className="bg-black/5 dark:bg-white/5 border-b border-lightBorder dark:border-darkBorder">
                   {headerGroup.headers.map(header => (
-                    <th key={header.id} className="p-4 text-xs text-gray-500 font-semibold uppercase tracking-wider">
+                    <th key={header.id} className="p-4 text-xs text-lightMuted dark:text-darkMuted font-bold uppercase tracking-widest">
                       {flexRender(header.column.columnDef.header, header.getContext())}
                     </th>
                   ))}
@@ -198,12 +198,12 @@ export default function OrderTable() {
             <tbody>
               {table.getRowModel().rows.length === 0 ? (
                 <tr>
-                   <td colSpan={6} className="p-8 text-center text-gray-500">Tidak ada data pesanan.</td>
+                   <td colSpan={6} className="p-8 text-center text-lightMuted dark:text-darkMuted">Tidak ada data pesanan.</td>
                 </tr>
               ) : table.getRowModel().rows.map(row => (
-                <tr key={row.id} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
+                <tr key={row.id} className="border-b border-lightBorder dark:border-darkBorder hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
                   {row.getVisibleCells().map(cell => (
-                    <td key={cell.id} className="p-4 text-sm text-gray-700">
+                    <td key={cell.id} className="p-4 text-sm">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
                   ))}
@@ -216,21 +216,21 @@ export default function OrderTable() {
 
       {/* Pagination */}
       <div className="flex items-center justify-between pt-2">
-        <span className="text-sm text-gray-500">
+        <span className="text-sm font-semibold tracking-widest uppercase text-lightMuted dark:text-darkMuted">
             Halaman {page} dari {data?.last_page || 1}
         </span>
         <div className="flex space-x-2">
             <button 
                 onClick={() => setPage(p => Math.max(1, p - 1))} 
                 disabled={page === 1}
-                className="px-3 py-1.5 border rounded-md text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1.5 border border-lightBorder dark:border-darkBorder rounded-md text-sm font-bold uppercase tracking-widest hover:bg-black/5 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
                 Sebelumnya
             </button>
             <button 
                 onClick={() => setPage(p => p + 1)} 
                 disabled={page >= (data?.last_page || 1)}
-                className="px-3 py-1.5 border rounded-md text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1.5 border border-lightBorder dark:border-darkBorder rounded-md text-sm font-bold uppercase tracking-widest hover:bg-black/5 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
                 Selanjutnya
             </button>

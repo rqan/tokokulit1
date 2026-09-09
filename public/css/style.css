@@ -38,3 +38,35 @@ body {
 /* Hide scrollbar for the drum links */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Fix DataTables styling for dark mode */
+.dark .dataTables_wrapper .dataTables_length select,
+.dark .dataTables_wrapper .dataTables_filter input {
+    background-color: transparent !important;
+    border: 1px solid #333333 !important;
+    color: #F8F9FA !important;
+    outline: none !important;
+}
+
+.dark .dataTables_wrapper .dataTables_length select:focus,
+.dark .dataTables_wrapper .dataTables_filter input:focus {
+    border-color: #F8F9FA !important;
+}
+
+.dark .dataTables_wrapper .dataTables_info,
+.dark .dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #A0AEC0 !important;
+}
+
+.dark .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: transparent !important;
+    border-color: #F8F9FA !important;
+    color: #F8F9FA !important;
+}
+
+.dark .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #F8F9FA !important;
+    border-color: #F8F9FA !important;
+}
+

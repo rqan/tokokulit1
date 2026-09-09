@@ -106,42 +106,42 @@ export default function ProductForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white p-6 rounded-lg shadow-sm">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-lightBg dark:bg-darkBg p-6 rounded-xl border border-lightBorder dark:border-darkBorder shadow-sm text-lightMain dark:text-darkMain">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Nama Produk</label>
-          <input {...register('name')} className="mt-1 block w-full border rounded p-2" />
+          <label className="block text-xs font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted mb-2">Nama Produk</label>
+          <input {...register('name')} className="mt-1 block w-full bg-transparent border border-lightBorder dark:border-darkBorder rounded p-2 outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors" />
           {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Harga (Rp)</label>
-          <input type="number" {...register('price', { valueAsNumber: true })} className="mt-1 block w-full border rounded p-2" />
+          <label className="block text-xs font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted mb-2">Harga (Rp)</label>
+          <input type="number" {...register('price', { valueAsNumber: true })} className="mt-1 block w-full bg-transparent border border-lightBorder dark:border-darkBorder rounded p-2 outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors" />
           {errors.price && <p className="text-red-500 text-xs mt-1">{errors.price.message}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Stok Utama (Total)</label>
+          <label className="block text-xs font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted mb-2">Stok Utama (Total)</label>
           <input 
             type="number" 
             {...register('stock', { valueAsNumber: true })} 
             readOnly={hasVariants}
-            className={`mt-1 block w-full border rounded p-2 ${hasVariants ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50'}`} 
+            className={`mt-1 block w-full border border-lightBorder dark:border-darkBorder rounded p-2 outline-none transition-colors ${hasVariants ? 'bg-black/5 dark:bg-white/5 cursor-not-allowed text-lightMuted dark:text-darkMuted' : 'bg-transparent focus:border-lightMain dark:focus:border-darkMain'}`} 
           />
-          <p className="text-[10px] text-gray-500 mt-1">*Jika Anda menambahkan varian (ukuran/warna), stok ini akan otomatis terupdate dari jumlah stok varian.</p>
+          <p className="text-[10px] text-lightMuted dark:text-darkMuted mt-1">*Jika Anda menambahkan varian (ukuran/warna), stok ini akan otomatis terupdate dari jumlah stok varian.</p>
           {errors.stock && <p className="text-red-500 text-xs mt-1">{errors.stock.message}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+          <label className="block text-xs font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted mb-2">Kategori</label>
           <div className="flex gap-2">
             {!isNewCategory ? (
-              <select {...register('category')} className="block w-full border rounded p-2">
-                <option value="">Pilih Kategori...</option>
-                {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+              <select {...register('category')} className="block w-full bg-transparent border border-lightBorder dark:border-darkBorder rounded p-2 outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors">
+                <option value="" className="bg-lightBg dark:bg-darkBg">Pilih Kategori...</option>
+                {categories.map(c => <option key={c.id} value={c.name} className="bg-lightBg dark:bg-darkBg">{c.name}</option>)}
               </select>
             ) : (
-              <input {...register('new_category')} className="block w-full border rounded p-2" placeholder="Nama kategori baru" />
+              <input {...register('new_category')} className="block w-full bg-transparent border border-lightBorder dark:border-darkBorder rounded p-2 outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors" placeholder="Nama kategori baru" />
             )}
             <button 
               type="button" 
@@ -150,7 +150,7 @@ export default function ProductForm() {
                 setValue('category', undefined);
                 setValue('new_category', undefined);
               }}
-              className="bg-gray-200 px-3 py-2 rounded text-sm whitespace-nowrap"
+              className="border border-lightBorder dark:border-darkBorder bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 px-3 py-2 rounded text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-colors"
             >
               {isNewCategory ? 'Pilih Kategori' : '+ Baru'}
             </button>
@@ -160,38 +160,38 @@ export default function ProductForm() {
       </div>
 
       {/* Varian Produk */}
-      <div className="border border-gray-200 p-4 rounded-lg bg-gray-50/50">
+      <div className="border border-lightBorder dark:border-darkBorder p-6 rounded-lg bg-black/5 dark:bg-white/5">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="font-semibold text-gray-800 text-sm uppercase tracking-widest">Varian Produk (Ukuran & Warna)</h3>
+          <h3 className="font-bold text-xs uppercase tracking-[0.2em] text-lightMain dark:text-darkMain">Varian Produk (Ukuran & Warna)</h3>
           <button 
             type="button" 
             onClick={() => appendVariant({ size: '', color: '', stock: 0 })}
-            className="text-xs bg-black text-white px-3 py-1 rounded"
+            className="text-[10px] bg-lightMain dark:bg-darkMain text-lightBg dark:text-darkBg px-3 py-1.5 rounded font-bold tracking-widest uppercase hover:opacity-90"
           >
             + Tambah Varian
           </button>
         </div>
         
         {variantFields.length === 0 ? (
-          <p className="text-xs text-gray-500">Belum ada varian. Produk ini tidak memiliki pilihan ukuran atau warna khusus.</p>
+          <p className="text-xs text-lightMuted dark:text-darkMuted">Belum ada varian. Produk ini tidak memiliki pilihan ukuran atau warna khusus.</p>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {variantFields.map((field, index) => (
-              <div key={field.id} className="flex flex-wrap md:flex-nowrap gap-3 items-end border-b border-gray-200 pb-3">
+              <div key={field.id} className="flex flex-wrap md:flex-nowrap gap-4 items-end border-b border-lightBorder dark:border-darkBorder pb-4">
                 <div className="flex-1">
-                  <label className="block text-xs font-medium text-gray-500 mb-1">Ukuran (Opsional)</label>
-                  <input {...register(`variants.${index}.size`)} placeholder="S, M, L, 42..." className="block w-full border rounded p-2 text-sm" />
+                  <label className="block text-[10px] font-bold tracking-widest uppercase text-lightMuted dark:text-darkMuted mb-2">Ukuran (Opsional)</label>
+                  <input {...register(`variants.${index}.size`)} placeholder="S, M, L, 42..." className="block w-full bg-transparent border border-lightBorder dark:border-darkBorder rounded p-2 text-sm outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors" />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-xs font-medium text-gray-500 mb-1">Warna (Opsional)</label>
-                  <input {...register(`variants.${index}.color`)} placeholder="Hitam, Cokelat..." className="block w-full border rounded p-2 text-sm" />
+                  <label className="block text-[10px] font-bold tracking-widest uppercase text-lightMuted dark:text-darkMuted mb-2">Warna (Opsional)</label>
+                  <input {...register(`variants.${index}.color`)} placeholder="Hitam, Cokelat..." className="block w-full bg-transparent border border-lightBorder dark:border-darkBorder rounded p-2 text-sm outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors" />
                 </div>
                 <div className="w-24">
-                  <label className="block text-xs font-medium text-gray-500 mb-1">Stok</label>
-                  <input type="number" {...register(`variants.${index}.stock`, { valueAsNumber: true })} className="block w-full border rounded p-2 text-sm" />
+                  <label className="block text-[10px] font-bold tracking-widest uppercase text-lightMuted dark:text-darkMuted mb-2">Stok</label>
+                  <input type="number" {...register(`variants.${index}.stock`, { valueAsNumber: true })} className="block w-full bg-transparent border border-lightBorder dark:border-darkBorder rounded p-2 text-sm outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors" />
                 </div>
                 <div>
-                  <button type="button" onClick={() => removeVariant(index)} className="bg-red-100 text-red-600 px-3 py-2 rounded text-sm hover:bg-red-200">
+                  <button type="button" onClick={() => removeVariant(index)} className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-3 py-2 rounded text-[10px] font-bold tracking-widest uppercase transition-colors">
                     Hapus
                   </button>
                 </div>
@@ -202,16 +202,16 @@ export default function ProductForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Upload Gambar (Drag & Drop)</label>
-        <div {...getRootProps()} className={`border-2 border-dashed p-10 text-center rounded-lg cursor-pointer ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}`}>
+        <label className="block text-xs font-bold tracking-[0.2em] uppercase text-lightMuted dark:text-darkMuted mb-3">Upload Gambar (Drag & Drop)</label>
+        <div {...getRootProps()} className={`border-2 border-dashed p-10 text-center rounded-lg cursor-pointer transition-colors ${isDragActive ? 'border-lightMain dark:border-darkMain bg-black/5 dark:bg-white/5' : 'border-lightBorder dark:border-darkBorder'}`}>
           <input {...getInputProps()} />
           {preview ? (
              <div className="flex flex-col items-center justify-center">
                <img src={preview} alt="Preview" className="h-40 object-contain rounded mb-4 shadow-sm" />
-               <p className="text-sm text-gray-500">Klik atau tarik gambar lain untuk mengganti</p>
+               <p className="text-xs font-semibold tracking-widest uppercase text-lightMuted dark:text-darkMuted">Klik atau tarik gambar lain untuk mengganti</p>
              </div>
           ) : (
-             <p className="text-gray-500">Tarik gambar ke sini, atau klik untuk memilih file</p>
+             <p className="text-xs font-semibold tracking-widest uppercase text-lightMuted dark:text-darkMuted">Tarik gambar ke sini, atau klik untuk memilih file</p>
           )}
         </div>
       </div>
@@ -219,7 +219,7 @@ export default function ProductForm() {
       <button 
         type="submit" 
         disabled={isSubmitting}
-        className="w-full bg-black text-white p-3 rounded-lg hover:bg-gray-800 disabled:opacity-50 font-bold uppercase tracking-widest text-sm"
+        className="w-full bg-lightMain dark:bg-darkMain text-lightBg dark:text-darkBg p-4 rounded-lg hover:opacity-90 disabled:opacity-50 font-bold uppercase tracking-[0.2em] text-xs transition-colors"
       >
         {isSubmitting ? 'Menyimpan...' : 'Simpan Produk'}
       </button>

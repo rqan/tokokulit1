@@ -100,30 +100,30 @@ export default function ProductTable() {
   });
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm">
+    <div className="bg-lightBg dark:bg-darkBg border border-lightBorder dark:border-darkBorder p-6 rounded-lg shadow-sm text-lightMain dark:text-darkMain">
       <div className="flex justify-between items-center mb-4">
         <input 
           type="text" 
           placeholder="Cari produk..." 
-          className="border rounded p-2 w-64"
+          className="border border-lightBorder dark:border-darkBorder bg-transparent rounded p-2 w-64 outline-none focus:border-lightMain dark:focus:border-darkMain transition-colors"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <a href="/admin/products/create" className="bg-black text-white px-4 py-2 rounded">Tambah Produk</a>
+        <a href="/admin/products/create" className="bg-lightMain dark:bg-darkMain text-lightBg dark:text-darkBg px-4 py-2 rounded font-bold uppercase tracking-widest text-xs hover:opacity-90">Tambah Produk</a>
       </div>
 
       {isLoading ? (
         <div className="animate-pulse flex flex-col space-y-4">
-           {[...Array(5)].map((_, i) => <div key={i} className="h-10 bg-gray-200 rounded"></div>)}
+           {[...Array(5)].map((_, i) => <div key={i} className="h-10 bg-gray-200 dark:bg-gray-800 rounded"></div>)}
         </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               {table.getHeaderGroups().map(headerGroup => (
-                <tr key={headerGroup.id} className="border-b">
+                <tr key={headerGroup.id} className="border-b border-lightBorder dark:border-darkBorder">
                   {headerGroup.headers.map(header => (
-                    <th key={header.id} className="p-3 text-gray-600 text-sm font-semibold">
+                    <th key={header.id} className="p-3 text-lightMuted dark:text-darkMuted text-xs font-bold uppercase tracking-widest">
                       {flexRender(header.column.columnDef.header, header.getContext())}
                     </th>
                   ))}
@@ -132,9 +132,9 @@ export default function ProductTable() {
             </thead>
             <tbody>
               {table.getRowModel().rows.map(row => (
-                <tr key={row.id} className="border-b hover:bg-gray-50">
+                <tr key={row.id} className="border-b border-lightBorder dark:border-darkBorder hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
                   {row.getVisibleCells().map(cell => (
-                    <td key={cell.id} className="p-3">
+                    <td key={cell.id} className="p-3 text-sm">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
                   ))}
@@ -146,11 +146,11 @@ export default function ProductTable() {
       )}
 
       {/* Pagination */}
-      <div className="flex items-center justify-between mt-4">
+      <div className="flex items-center justify-between mt-4 text-sm font-semibold tracking-widest uppercase text-lightMuted dark:text-darkMuted">
         <button 
           onClick={() => setPage(p => Math.max(1, p - 1))} 
           disabled={page === 1}
-          className="px-4 py-2 border rounded disabled:opacity-50"
+          className="px-4 py-2 border border-lightBorder dark:border-darkBorder rounded disabled:opacity-50 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
         >
           Previous
         </button>
@@ -158,7 +158,7 @@ export default function ProductTable() {
         <button 
           onClick={() => setPage(p => p + 1)} 
           disabled={page >= (data?.last_page || 1)}
-          className="px-4 py-2 border rounded disabled:opacity-50"
+          className="px-4 py-2 border border-lightBorder dark:border-darkBorder rounded disabled:opacity-50 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
         >
           Next
         </button>
