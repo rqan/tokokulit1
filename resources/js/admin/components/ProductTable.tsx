@@ -114,7 +114,7 @@ export default function ProductTable() {
 
       {isLoading ? (
         <div className="animate-pulse flex flex-col space-y-4">
-           {[...Array(5)].map((_, i) => <div key={i} className="h-10 bg-gray-200 dark:bg-gray-800 rounded"></div>)}
+           {[...Array(5)].map((_, i) => <div key={i} className="h-10 bg-black/10 dark:bg-white/10 rounded"></div>)}
         </div>
       ) : (
         <div className="overflow-x-auto">

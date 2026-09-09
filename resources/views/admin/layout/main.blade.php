@@ -21,7 +21,11 @@
         /* Override Simple-DataTables styles for dark mode compatibility */
         .dataTable-wrapper { font-family: inherit; }
         .dataTable-top, .dataTable-bottom { padding: 1rem 0; }
-        .dataTable-input { 
+        
+        .dark .dataTable-wrapper input,
+        .dark .dataTable-wrapper select,
+        .dataTable-input, 
+        .dataTable-selector { 
             background-color: transparent !important; 
             border: 1px solid #4a5568 !important; 
             color: inherit !important; 
@@ -29,17 +33,16 @@
             border-radius: 0.25rem;
             outline: none;
         }
+        
+        .dark .dataTable-wrapper input:focus,
+        .dark .dataTable-wrapper select:focus,
         .dataTable-input:focus { border-color: #fca311 !important; }
-        .dataTable-selector {
-            background-color: transparent !important;
-            border: 1px solid #4a5568 !important;
-            color: inherit !important;
-            padding: 0.5rem;
-            border-radius: 0.25rem;
-        }
-        .dark .dataTable-selector option { background-color: #1a202c !important; color: #fff !important; }
+        
+        .dark .dataTable-wrapper select option { background-color: #1a202c !important; color: #fff !important; }
+        
         .dataTable-table > thead > tr > th { border-bottom: 1px solid #4a5568 !important; }
-        .dataTable-table > tbody > tr > td { border-bottom: 1px solid #4a5568 !important; }
+        .dataTable-table > tbody > tr > td { border-bottom: 1px solid #4a5568 !important; border-top: none !important; }
+        
         .dataTable-pagination a {
             color: inherit !important;
             border: 1px solid transparent !important;

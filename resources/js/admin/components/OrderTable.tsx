@@ -179,7 +179,7 @@ export default function OrderTable() {
 
       {isLoading ? (
         <div className="animate-pulse flex flex-col space-y-4 pt-4">
-           {[...Array(6)].map((_, i) => <div key={i} className="h-12 bg-gray-200 dark:bg-gray-800 rounded-md"></div>)}
+           {[...Array(6)].map((_, i) => <div key={i} className="h-12 bg-black/10 dark:bg-white/10 rounded-md"></div>)}
         </div>
       ) : (
         <div className="overflow-x-auto rounded-lg border border-lightBorder dark:border-darkBorder">
