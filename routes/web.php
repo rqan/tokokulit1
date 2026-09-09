@@ -58,18 +58,7 @@ Route::get('/register', [\App\Http\Controllers\AuthController::class, 'register'
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'attemptRegister']);
 Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
-// TEMPORARY ROUTE TO FIX RENDER LOGIN
-Route::get('/reset-admin', function() {
-    $user = \App\Models\User::firstOrCreate(
-        ['email' => 'focari@proton.me'],
-        ['name' => 'Superadmin', 'password' => \Illuminate\Support\Facades\Hash::make('password123'), 'role' => 'superadmin']
-    );
-    $user->update([
-        'role' => 'superadmin',
-        'password' => \Illuminate\Support\Facades\Hash::make('password123')
-    ]);
-    return "Akun Superadmin (focari@proton.me) berhasil direset. Password sekarang adalah: password123. Silakan kembali ke halaman login.";
-});
+
 
 
 
