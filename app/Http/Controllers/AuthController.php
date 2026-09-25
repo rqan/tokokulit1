@@ -60,6 +60,13 @@ class AuthController extends Controller
 
     public function attemptRegister(Request $request)
     {
+        if ($request->has('contact')) {
+            $request->merge(['contact' => trim($request->contact)]);
+        }
+        if ($request->has('username')) {
+            $request->merge(['username' => trim($request->username)]);
+        }
+
         $request->validate([
             'username' => 'required|min:3|max:100',
             'contact' => 'required',
@@ -91,7 +98,7 @@ class AuthController extends Controller
             'name' => $request->username,
             'email' => $isEmail ? $request->contact : null,
             'phone' => !$isEmail ? $request->contact : null,
-            'password' => $request->password, // User model auto-hashes via 'hashed' cast
+            'password' => Hash::make($request->password), // User model auto-hashes via 'hashed' cast, but we hash explicitly for safety
             'role' => 'pelanggan'
         ]);
 
