@@ -27,21 +27,31 @@ class AuthController extends Controller
         ]);
 
         $login = trim($request->input('login'));
-        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+        $password = $request->password;
 
-        $credentials = [
-            $fieldType => $login,
-            'password' => $request->password
-        ];
+        $authenticated = false;
 
-        if (Auth::attempt($credentials)) {
+        // 1. Try Email
+        if (filter_var($login, FILTER_VALIDATE_EMAIL)) {
+            $authenticated = Auth::attempt(['email' => $login, 'password' => $password]);
+        } else {
+            // 2. Try Phone
+            $authenticated = Auth::attempt(['phone' => $login, 'password' => $password]);
+            
+            // 3. Try Username (name) if phone fails
+            if (!$authenticated) {
+                $authenticated = Auth::attempt(['name' => $login, 'password' => $password]);
+            }
+        }
+
+        if ($authenticated) {
             $request->session()->regenerate();
             $user = Auth::user();
             
             // Set additional session logic for compatibility with the old CodeIgniter flow if needed
             $request->session()->put([
                 'user_id' => $user->id,
-                'username' => $user->username ?? 'user',
+                'username' => $user->name ?? 'user',
                 'role' => $user->role ?? 'pelanggan',
                 'isLoggedIn' => true,
             ]);
@@ -54,7 +64,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'login' => 'Email/No HP atau password salah.',
+            'login' => 'Email/No HP/Username atau password salah.',
         ])->onlyInput('login');
     }
 
@@ -98,7 +108,7 @@ class AuthController extends Controller
             'name' => $request->username,
             'email' => $isEmail ? $request->contact : null,
             'phone' => !$isEmail ? $request->contact : null,
-            'password' => Hash::make($request->password), // User model auto-hashes via 'hashed' cast, but we hash explicitly for safety
+            'password' => $request->password, // User model auto-hashes via 'hashed' cast
             'role' => 'pelanggan'
         ]);
 
