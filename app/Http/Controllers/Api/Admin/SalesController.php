@@ -26,20 +26,20 @@ class SalesController extends Controller
         // Current Period Data
         $ordersCurrent = Order::where('created_at', '>=', $startDate)->count();
         $revenueCurrent = Order::where('created_at', '>=', $startDate)
-            ->whereIn('status', ['paid', 'shipped', 'completed'])
-            ->sum('total_amount');
+            ->whereIn('status', ['processing', 'shipped', 'completed'])
+            ->sum('grand_total');
             
         $canceledOrdersCurrent = Order::where('created_at', '>=', $startDate)
-            ->whereIn('status', ['canceled'])->count();
+            ->whereIn('status', ['cancelled'])->count();
 
         // Previous Period Data
         $ordersPrev = Order::whereBetween('created_at', [$previousStartDate, $previousEndDate])->count();
         $revenuePrev = Order::whereBetween('created_at', [$previousStartDate, $previousEndDate])
-            ->whereIn('status', ['paid', 'shipped', 'completed'])
-            ->sum('total_amount');
+            ->whereIn('status', ['processing', 'shipped', 'completed'])
+            ->sum('grand_total');
         
         $canceledOrdersPrev = Order::whereBetween('created_at', [$previousStartDate, $previousEndDate])
-            ->whereIn('status', ['canceled'])->count();
+            ->whereIn('status', ['cancelled'])->count();
 
         // Calc Delta (%)
         $calcDelta = function($curr, $prev) {
@@ -67,8 +67,8 @@ class SalesController extends Controller
             $dateEnd = Carbon::now()->subDays($i)->endOfDay();
             
             $dailyRevenue = Order::whereBetween('created_at', [$dateStart, $dateEnd])
-                ->whereIn('status', ['paid', 'shipped', 'completed'])
-                ->sum('total_amount');
+                ->whereIn('status', ['processing', 'shipped', 'completed'])
+                ->sum('grand_total');
             
             $chartData[] = [
                 'name' => Carbon::now()->subDays($i)->format('d M'),
@@ -83,7 +83,7 @@ class SalesController extends Controller
             ->get()
             ->map(function ($item) {
                 return [
-                    'name' => ucfirst($item->status),
+                    'name' => ucfirst(str_replace('_', ' ', $item->status)),
                     'value' => $item->count
                 ];
             });
